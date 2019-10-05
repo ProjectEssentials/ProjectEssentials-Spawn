@@ -8,6 +8,7 @@ import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.builder.LiteralArgumentBuilder.literal
 import com.mojang.brigadier.context.CommandContext
 import net.minecraft.command.CommandSource
+import net.minecraft.command.Commands
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.world.dimension.DimensionType
 import org.apache.logging.log4j.LogManager
@@ -22,7 +23,15 @@ object SpawnCommand {
             dispatcher.register(
                 literal<CommandSource>(command).executes {
                     return@executes execute(it)
-                }
+                }.then(
+                    Commands.literal("reload").executes {
+                        return@executes reload(it)
+                    }
+                ).then(
+                    Commands.literal("save").executes {
+                        return@executes save(it)
+                    }
+                )
             )
         }
     }
@@ -55,5 +64,44 @@ object SpawnCommand {
             DimensionType.getById(dimId) ?: DimensionType.OVERWORLD
         )
         player.teleport(targetWorld, xPos, yPos, zPos, yaw, pitch)
+    }
+
+    private fun reload(c: CommandContext<CommandSource>): Int {
+        if (c.isPlayerSender()) {
+            val playerName = c.source.asPlayer().name.string
+            if (!PermissionsAPI.hasPermission(playerName, "ess.spawn.reload")) {
+                sendMsg(c.source, "spawn.reload.restricted")
+                return 0
+            }
+        }
+        SpawnModelBase.loadData()
+        SpawnModelBase.assignSpawn(c.source.server)
+        if (c.isPlayerSender()) {
+            val playerName = c.source.asPlayer().name.string
+            logger.info("Executed command \"/${c.input}\" from $playerName")
+            sendMsg(c.source, "spawn.reload.success")
+        } else {
+            logger.info("World spawn configuration reloaded.")
+        }
+        return 0
+    }
+
+    private fun save(c: CommandContext<CommandSource>): Int {
+        if (c.isPlayerSender()) {
+            val playerName = c.source.asPlayer().name.string
+            if (!PermissionsAPI.hasPermission(playerName, "ess.spawn.reload")) {
+                sendMsg(c.source, "spawn.reload.restricted")
+                return 0
+            }
+        }
+        SpawnModelBase.saveData()
+        if (c.isPlayerSender()) {
+            val playerName = c.source.asPlayer().name.string
+            logger.info("Executed command \"/${c.input}\" from $playerName")
+            sendMsg(c.source, "spawn.reload.success")
+        } else {
+            logger.info("World spawn configuration saved.")
+        }
+        return 0
     }
 }

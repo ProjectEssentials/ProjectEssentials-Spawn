@@ -60,10 +60,11 @@ class EntryPoint {
         logger.info("$MOD_NAME starting mod loading ...")
         registerCommands(event.server.commandManager.dispatcher)
         processFirstSession(event)
-        SpawnModelBase.assignSpawn(event)
+        SpawnModelBase.assignSpawn(event.server)
     }
 
     private fun processFirstSession(event: FMLServerStartingEvent) {
+        logger.info("Processing first session for loaded world")
         var equals = true
         val world = event.server.getWorld(DimensionType.OVERWORLD)
 
@@ -82,7 +83,6 @@ class EntryPoint {
             SpawnModelBase.spawnModel.yPos = world.spawnPoint.y.toDouble()
             SpawnModelBase.spawnModel.zPos = world.spawnPoint.z.toDouble()
         }
-        // if (world.firstSession()) { get world spawn and set it in config ; return }
     }
 
     private fun registerCommands(

@@ -5,9 +5,9 @@ import com.mairwunnx.projectessentials.projectessentialsspawn.helpers.SPAWN_CONF
 import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
+import net.minecraft.server.MinecraftServer
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.dimension.DimensionType
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent
 import org.apache.logging.log4j.LogManager
 import java.io.File
 
@@ -42,11 +42,11 @@ object SpawnModelBase {
         spawnModel = Json.parse(SpawnModel.serializer(), spawnConfigRaw)
     }
 
-    fun assignSpawn(event: FMLServerStartingEvent) {
+    fun assignSpawn(server: MinecraftServer) {
         val xPos = spawnModel.xPos
         val yPos = spawnModel.yPos
         val zPos = spawnModel.zPos
-        event.server.getWorld(DimensionType.OVERWORLD).spawnPoint = BlockPos(
+        server.getWorld(DimensionType.OVERWORLD).spawnPoint = BlockPos(
             xPos, yPos, zPos
         )
     }

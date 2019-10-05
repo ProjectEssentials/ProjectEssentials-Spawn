@@ -4,7 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SpawnModel(
-    var firstSession: Boolean = false,
     var worldId: Int = 0,
     var xPos: Double = 0.5,
     var yPos: Double = 100.0,

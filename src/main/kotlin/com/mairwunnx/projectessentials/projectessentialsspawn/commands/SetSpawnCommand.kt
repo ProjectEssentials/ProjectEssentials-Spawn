@@ -12,7 +12,9 @@ import net.minecraft.util.math.BlockPos
 import org.apache.logging.log4j.LogManager
 
 object SetSpawnCommand {
-    private val aliases = arrayOf("setspawn", "esetspawn", "spawnpoint", "setworldspawn")
+    private val aliases = arrayOf(
+        "setspawn", "esetspawn", "spawnpoint", "setworldspawn"
+    )
     private val logger = LogManager.getLogger()
 
     fun register(dispatcher: CommandDispatcher<CommandSource>) {
@@ -36,7 +38,7 @@ object SetSpawnCommand {
                 SpawnModelBase.spawnModel.yaw = player.rotationYaw
                 SpawnModelBase.spawnModel.pitch = player.rotationPitch
                 SpawnModelBase.spawnModel.worldId = player.serverWorld.worldType.id
-                player.world.spawnPoint = BlockPos(player.posX,  player.posY, player.posZ)
+                player.world.spawnPoint = BlockPos(player.posX, player.posY, player.posZ)
                 sendMsg(c.source, "spawn.set.success")
                 logger.info("New spawn point installed by ${player.name.string} with data: ")
                 logger.info("    - xpos: ${player.posX}")
