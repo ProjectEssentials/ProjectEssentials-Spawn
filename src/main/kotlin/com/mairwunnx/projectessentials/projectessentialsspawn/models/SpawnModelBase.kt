@@ -5,6 +5,9 @@ import com.mairwunnx.projectessentials.projectessentialsspawn.helpers.SPAWN_CONF
 import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
+import net.minecraft.util.math.BlockPos
+import net.minecraft.world.dimension.DimensionType
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent
 import org.apache.logging.log4j.LogManager
 import java.io.File
 
@@ -37,6 +40,17 @@ object SpawnModelBase {
         }
         val spawnConfigRaw = File(SPAWN_CONFIG).readText()
         spawnModel = Json.parse(SpawnModel.serializer(), spawnConfigRaw)
+    }
+
+    fun assignSpawn(event: FMLServerStartingEvent) {
+        event.server.worlds.forEach {
+            val dim = it.dimension.type.id
+            event.server.getWorld()
+            if (dim == 0) {
+                val pos = spawnModel
+                it.spawnPoint = BlockPos(pos.x, pos.y, pos.z)
+            }
+        }
     }
 
     fun saveData() {

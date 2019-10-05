@@ -6,7 +6,9 @@ import com.mairwunnx.projectessentials.projectessentialsspawn.helpers.validateFo
 import com.mairwunnx.projectessentials.projectessentialsspawn.models.SpawnModelBase
 import com.mojang.brigadier.CommandDispatcher
 import net.minecraft.command.CommandSource
+import net.minecraft.util.math.BlockPos
 import net.minecraftforge.common.MinecraftForge
+import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent
@@ -49,10 +51,11 @@ class EntryPoint {
         logger.info("    - Telegram chat: $MOD_TELEGRAM_LINK")
     }
 
-    @SubscribeEvent
-    internal fun onServerStarting(it: FMLServerStartingEvent) {
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    fun onServerStarting(event: FMLServerStartingEvent) {
         logger.info("$MOD_NAME starting mod loading ...")
-        registerCommands(it.server.commandManager.dispatcher)
+        registerCommands(event.server.commandManager.dispatcher)
+        SpawnModelBase.assignSpawn(event)
     }
 
     private fun registerCommands(
@@ -65,7 +68,7 @@ class EntryPoint {
 
     @Suppress("UNUSED_PARAMETER")
     @SubscribeEvent
-    internal fun onServerStopping(it: FMLServerStoppingEvent) {
+    fun onServerStopping(it: FMLServerStoppingEvent) {
         logger.info("Shutting down $MOD_NAME mod ...")
         logger.info("    - Saving world spawn data ...")
         SpawnModelBase.saveData()
