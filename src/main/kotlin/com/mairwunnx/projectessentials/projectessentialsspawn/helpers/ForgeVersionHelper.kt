@@ -6,6 +6,8 @@ import com.mairwunnx.projectessentials.projectessentialsspawn.MOD_VERSION
 import net.minecraftforge.versions.forge.ForgeVersion
 import org.apache.logging.log4j.LogManager
 
+// TODO: MOVE TO CORE PROJECT!!
+
 private val logger = LogManager.getLogger()
 
 internal fun validateForgeVersion() {

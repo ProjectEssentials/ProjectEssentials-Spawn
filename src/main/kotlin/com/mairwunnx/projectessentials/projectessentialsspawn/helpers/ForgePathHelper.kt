@@ -4,6 +4,8 @@ import com.mairwunnx.projectessentials.projectessentialsspawn.enums.ForgeRootPat
 import net.minecraft.client.Minecraft
 import java.io.File
 
+// TODO: MOVE TO CORE PROJECT!!!
+
 private val clientRootDir by lazy {
     Minecraft.getInstance().gameDir.absolutePath
 }

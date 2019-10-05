@@ -6,6 +6,8 @@ import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.fml.DistExecutor
 import java.io.File
 
+// TODO: MOVE TO CORE PROJECT!!!
+
 internal val CONFIG_FOLDER = root + File.separator + "config"
 internal val MOD_CONFIG_FOLDER =
     CONFIG_FOLDER + File.separator + PART_OF_MOD.replace(" ", "")
