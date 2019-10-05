@@ -1,5 +1,6 @@
 package com.mairwunnx.projectessentials.projectessentialsspawn.commands
 
+import com.mairwunnx.projectessentials.projectessentialsspawn.*
 import com.mairwunnx.projectessentials.projectessentialsspawn.extensions.isPlayerSender
 import com.mairwunnx.projectessentials.projectessentialsspawn.extensions.sendMsg
 import com.mairwunnx.projectessentials.projectessentialsspawn.models.SpawnModelBase
@@ -30,6 +31,10 @@ object SpawnCommand {
                 ).then(
                     Commands.literal("save").executes {
                         return@executes save(it)
+                    }
+                ).then(
+                    Commands.literal("version").executes {
+                        return@executes version(it)
                     }
                 )
             )
@@ -89,8 +94,8 @@ object SpawnCommand {
     private fun save(c: CommandContext<CommandSource>): Int {
         if (c.isPlayerSender()) {
             val playerName = c.source.asPlayer().name.string
-            if (!PermissionsAPI.hasPermission(playerName, "ess.spawn.reload")) {
-                sendMsg(c.source, "spawn.reload.restricted")
+            if (!PermissionsAPI.hasPermission(playerName, "ess.spawn.save")) {
+                sendMsg(c.source, "spawn.save.restricted")
                 return 0
             }
         }
@@ -98,9 +103,43 @@ object SpawnCommand {
         if (c.isPlayerSender()) {
             val playerName = c.source.asPlayer().name.string
             logger.info("Executed command \"/${c.input}\" from $playerName")
-            sendMsg(c.source, "spawn.reload.success")
+            sendMsg(c.source, "spawn.save.success")
         } else {
             logger.info("World spawn configuration saved.")
+        }
+        return 0
+    }
+
+    private fun version(c: CommandContext<CommandSource>): Int {
+        if (c.isPlayerSender()) {
+            val playerName = c.source.asPlayer().name.string
+            if (!PermissionsAPI.hasPermission(playerName, "ess.spawn.version")) {
+                sendMsg(c.source, "spawn.version.restricted")
+                return 0
+            }
+        }
+        if (c.isPlayerSender()) {
+            val playerName = c.source.asPlayer().name.string
+            sendMsg(
+                c.source,
+                "spawn.version.success",
+                MOD_NAME,
+                MOD_VERSION,
+                MOD_MAINTAINER,
+                MOD_TARGET_FORGE,
+                MOD_TARGET_MC,
+                MOD_SOURCES_LINK,
+                MOD_TELEGRAM_LINK
+            )
+            logger.info("Executed command \"/${c.input}\" from $playerName")
+        } else {
+            logger.info("        $MOD_NAME")
+            logger.info("Version: $MOD_VERSION")
+            logger.info("Maintainer: $MOD_MAINTAINER")
+            logger.info("Target Forge version: $MOD_TARGET_FORGE")
+            logger.info("Target Minecraft version: $MOD_TARGET_MC")
+            logger.info("Source code: $MOD_SOURCES_LINK")
+            logger.info("Telegram chat: $MOD_TELEGRAM_LINK")
         }
         return 0
     }
