@@ -6,8 +6,10 @@ import com.mairwunnx.projectessentials.projectessentialsspawn.helpers.validateFo
 import com.mairwunnx.projectessentials.projectessentialsspawn.models.SpawnModelBase
 import com.mojang.brigadier.CommandDispatcher
 import net.minecraft.command.CommandSource
-import net.minecraft.util.math.BlockPos
+import net.minecraft.entity.player.ServerPlayerEntity
+import net.minecraft.world.dimension.DimensionType
 import net.minecraftforge.common.MinecraftForge
+import net.minecraftforge.event.entity.player.PlayerEvent
 import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
@@ -15,6 +17,7 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent
 import net.minecraftforge.fml.event.server.FMLServerStoppingEvent
 import org.apache.logging.log4j.LogManager
 
+// todo: move to core project as abstract class
 const val MOD_ID = "project_essentials_spawn"
 const val MOD_NAME = "Project Essentials Spawn"
 const val PART_OF_MOD = "Project Essentials"
@@ -40,6 +43,7 @@ class EntryPoint {
         SpawnModelBase.loadData()
     }
 
+    // todo: Move to core project
     private fun logBaseInfo() {
         logger.info("$MOD_NAME starting initializing ...")
         logger.info("    - Mod Id: $MOD_ID")
@@ -55,7 +59,30 @@ class EntryPoint {
     fun onServerStarting(event: FMLServerStartingEvent) {
         logger.info("$MOD_NAME starting mod loading ...")
         registerCommands(event.server.commandManager.dispatcher)
+        processFirstSession(event)
         SpawnModelBase.assignSpawn(event)
+    }
+
+    private fun processFirstSession(event: FMLServerStartingEvent) {
+        var equals = true
+        val world = event.server.getWorld(DimensionType.OVERWORLD)
+
+        if (SpawnModelBase.spawnModel.xPos.toInt() != world.spawnPoint.x) {
+            equals = false
+        }
+        if (SpawnModelBase.spawnModel.yPos.toInt() != world.spawnPoint.y) {
+            equals = false
+        }
+        if (SpawnModelBase.spawnModel.zPos.toInt() != world.spawnPoint.z) {
+            equals = false
+        }
+
+        if (!equals) {
+            SpawnModelBase.spawnModel.xPos = world.spawnPoint.x.toDouble()
+            SpawnModelBase.spawnModel.yPos = world.spawnPoint.y.toDouble()
+            SpawnModelBase.spawnModel.zPos = world.spawnPoint.z.toDouble()
+        }
+        // if (world.firstSession()) { get world spawn and set it in config ; return }
     }
 
     private fun registerCommands(
@@ -72,5 +99,12 @@ class EntryPoint {
         logger.info("Shutting down $MOD_NAME mod ...")
         logger.info("    - Saving world spawn data ...")
         SpawnModelBase.saveData()
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    fun onPlayerRespawn(event: PlayerEvent.PlayerRespawnEvent) {
+        if (!event.player.bedPosition.isPresent) {
+            SpawnCommand.moveToSpawn(event.player as ServerPlayerEntity)
+        }
     }
 }

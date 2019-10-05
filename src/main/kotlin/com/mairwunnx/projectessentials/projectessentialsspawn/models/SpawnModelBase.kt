@@ -43,14 +43,12 @@ object SpawnModelBase {
     }
 
     fun assignSpawn(event: FMLServerStartingEvent) {
-        event.server.worlds.forEach {
-            val dim = it.dimension.type.id
-            event.server.getWorld()
-            if (dim == 0) {
-                val pos = spawnModel
-                it.spawnPoint = BlockPos(pos.x, pos.y, pos.z)
-            }
-        }
+        val xPos = spawnModel.xPos
+        val yPos = spawnModel.yPos
+        val zPos = spawnModel.zPos
+        event.server.getWorld(DimensionType.OVERWORLD).spawnPoint = BlockPos(
+            xPos, yPos, zPos
+        )
     }
 
     fun saveData() {

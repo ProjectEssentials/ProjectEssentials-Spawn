@@ -8,6 +8,7 @@ import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.builder.LiteralArgumentBuilder.literal
 import com.mojang.brigadier.context.CommandContext
 import net.minecraft.command.CommandSource
+import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.world.dimension.DimensionType
 import org.apache.logging.log4j.LogManager
 
@@ -30,16 +31,7 @@ object SpawnCommand {
         if (c.isPlayerSender()) {
             val playerName = c.source.asPlayer().name.string
             if (PermissionsAPI.hasPermission(playerName, "ess.spawn")) {
-                val xPos = SpawnModelBase.spawnModel.xPos
-                val yPos = SpawnModelBase.spawnModel.yPos
-                val zPos = SpawnModelBase.spawnModel.zPos
-                val yaw = SpawnModelBase.spawnModel.yaw
-                val pitch = SpawnModelBase.spawnModel.pitch
-                val dimId = SpawnModelBase.spawnModel.worldId
-                val targetWorld = c.source.server.getWorld(
-                    DimensionType.getById(dimId) ?: DimensionType.OVERWORLD
-                )
-                c.source.asPlayer().teleport(targetWorld, xPos, yPos, zPos, yaw, pitch)
+                moveToSpawn(c.source.asPlayer())
                 logger.info("Executed command \"/${c.input}\" from $playerName")
                 sendMsg(c.source, "spawn.success")
             } else {
@@ -50,5 +42,18 @@ object SpawnCommand {
             logger.info("Server failed to executing \"${c.input}\" command")
         }
         return 0
+    }
+
+    fun moveToSpawn(player: ServerPlayerEntity) {
+        val xPos = SpawnModelBase.spawnModel.xPos
+        val yPos = SpawnModelBase.spawnModel.yPos
+        val zPos = SpawnModelBase.spawnModel.zPos
+        val yaw = SpawnModelBase.spawnModel.yaw
+        val pitch = SpawnModelBase.spawnModel.pitch
+        val dimId = SpawnModelBase.spawnModel.worldId
+        val targetWorld = player.server.getWorld(
+            DimensionType.getById(dimId) ?: DimensionType.OVERWORLD
+        )
+        player.teleport(targetWorld, xPos, yPos, zPos, yaw, pitch)
     }
 }
