@@ -20,7 +20,7 @@
 ├── mods (that's how it should be)
 │   ├── Project Essentials Spawn-1.14.4-1.X.X.X.jar
 │   ├── Project Essentials-1.14.4-1.X.X.X.jar.
-│   ├── Project Essentials Core-1.14.4-1.X.X.X.jar.
+│   ├── Project Essentials Core-MOD-1.14.4-1.X.X.X.jar.
 │   └── Project Essentials Permissions-1.14.4-1.X.X.X.jar.
 └── ...
 ```
