@@ -4,7 +4,7 @@
 
 #### ❗ Compatibility with forge `28.0.X` version.
 
-## 🧐 Installation instruction:
+## 🎮 Installation instruction:
 > ##### Just move Project Essentials Spawn-1.14.4-1.X.X.X.jar to mods directory:
 
 ```
