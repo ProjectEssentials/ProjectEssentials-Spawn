@@ -1,12 +1,12 @@
 modLoader="javafml"
 loaderVersion="[28,)"
-issueTrackerURL="https://github.com/MairwunNx/ProjectEssentials-Spawn/issues"
+issueTrackerURL="https://github.com/ProjectEssentials/ProjectEssentials-Spawn/issues"
 
 [[mods]]
     modId="project_essentials_spawn"
     version="1.14.4-1.0.0.0"
     displayName="Project Essentials Spawn"
-    updateJSONURL="https://raw.githubusercontent.com/MairwunNx/ProjectEssentials-Spawn/MC-1.14.4/update.json"
+    updateJSONURL="https://raw.githubusercontent.com/ProjectEssentials/ProjectEssentials-Spawn/MC-1.14.4/update.json"
     displayURL="https://github.com/MairwunNx/ProjectEssentials-Spawn"
     credits="Thanks JetBrains for Intellij IDEA license!"
     authors="MairwunNx (Pavel Erokhin)"
