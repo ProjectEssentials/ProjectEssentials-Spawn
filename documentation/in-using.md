@@ -12,6 +12,12 @@ Releases page: https://github.com/ProjectEssentials/ProjectEssentials-Spawn/rele
 
 The minecraft forge folder structure below will help you understand what is written below.
 
+> ##### Important note: don't forget install mod dependencies!
+  - core: https://github.com/ProjectEssentials/ProjectEssentials-Core/releases
+  - permissions: https://github.com/ProjectEssentials/ProjectEssentials-Permissions/releases
+  - essentials: https://github.com/ProjectEssentials/ProjectEssentials/releases
+
+
 ```
 .
 ├── assets

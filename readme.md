@@ -7,6 +7,11 @@
 ## 🎮 Installation instruction:
 > ##### Just move Project Essentials Spawn-1.14.4-1.X.X.X.jar to mods directory:
 
+> ##### Important note: don't forget install mod dependencies!
+  - core: https://github.com/ProjectEssentials/ProjectEssentials-Core/releases
+  - permissions: https://github.com/ProjectEssentials/ProjectEssentials-Permissions/releases
+  - essentials: https://github.com/ProjectEssentials/ProjectEssentials/releases
+
 ```
 .
 ├── assets
