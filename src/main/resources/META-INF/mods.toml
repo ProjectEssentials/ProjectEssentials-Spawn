@@ -4,10 +4,10 @@ issueTrackerURL="https://github.com/ProjectEssentials/ProjectEssentials-Spawn/is
 
 [[mods]]
     modId="project_essentials_spawn"
-    version="1.14.4-1.0.0.0"
+    version="1.14.4-1.0.0.1"
     displayName="Project Essentials Spawn"
     updateJSONURL="https://raw.githubusercontent.com/ProjectEssentials/ProjectEssentials-Spawn/MC-1.14.4/update.json"
-    displayURL="https://github.com/MairwunNx/ProjectEssentials-Spawn"
+    displayURL="https://github.com/ProjectEssentials/ProjectEssentials-Spawn"
     credits="Thanks JetBrains for Intellij IDEA license!"
     authors="MairwunNx (Pavel Erokhin)"
     description='''
