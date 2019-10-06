@@ -1,6 +1,6 @@
 ## 🎊 Project Essentials: Spawn
 
-![GitHub](https://img.shields.io/github/license/ProjectEssentials/ProjectEssentials-Spawn).
+![GitHub](https://img.shields.io/github/license/ProjectEssentials/ProjectEssentials-Spawn)
 
 > ## Forge modification for controlling world spawn point on server and client.
 
