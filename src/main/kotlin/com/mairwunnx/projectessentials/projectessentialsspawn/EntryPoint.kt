@@ -26,7 +26,7 @@ const val MOD_MAINTAINER = "MairwunNx (Pavel Erokhin)"
 const val MOD_TARGET_FORGE = "28.0.X"
 const val MOD_TARGET_FORGE_REGEX = "^28\\.0\\..\\d{1,}|28\\.0\\.[\\d]\$"
 const val MOD_TARGET_MC = "1.14.4"
-const val MOD_SOURCES_LINK = "https://github.com/MairwunNx/ProjectEssentials-Spawn/"
+const val MOD_SOURCES_LINK = "https://github.com/ProjectEssentials/ProjectEssentials-Spawn/"
 const val MOD_TELEGRAM_LINK = "https://t.me/minecraftforge"
 
 @Suppress("unused")
