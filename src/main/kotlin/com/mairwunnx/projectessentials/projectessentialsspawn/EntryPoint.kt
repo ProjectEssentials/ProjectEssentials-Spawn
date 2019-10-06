@@ -21,7 +21,7 @@ import org.apache.logging.log4j.LogManager
 const val MOD_ID = "project_essentials_spawn"
 const val MOD_NAME = "Project Essentials Spawn"
 const val PART_OF_MOD = "Project Essentials"
-const val MOD_VERSION = "1.14.4-1.0.0.0"
+const val MOD_VERSION = "1.14.4-1.0.0.2"
 const val MOD_MAINTAINER = "MairwunNx (Pavel Erokhin)"
 const val MOD_TARGET_FORGE = "28.0.X"
 const val MOD_TARGET_FORGE_REGEX = "^28\\.0\\..\\d{1,}|28\\.0\\.[\\d]\$"
