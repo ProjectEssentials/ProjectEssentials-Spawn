@@ -23,6 +23,13 @@ issueTrackerURL="https://github.com/MairwunNx/ProjectEssentials-Spawn/issues"
     side="BOTH"
 
 [[dependencies.projectessentialsspawn]]
+    modId="project_essentials_permissions"
+    mandatory=true
+    versionRange="[0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.projectessentialsspawn]]
     modId="forge"
     mandatory=true
     versionRange="[28,)"
