@@ -1,11 +1,13 @@
 package com.mairwunnx.projectessentials.projectessentialsspawn.commands
 
-import com.mairwunnx.projectessentials.projectessentialsspawn.extensions.isPlayerSender
-import com.mairwunnx.projectessentials.projectessentialsspawn.extensions.sendMsg
 import com.mairwunnx.projectessentials.projectessentialsspawn.models.SpawnModelBase
+import com.mairwunnx.projectessentialscore.extensions.isPlayerSender
+import com.mairwunnx.projectessentialscore.extensions.sendMsg
+import com.mairwunnx.projectessentialscore.helpers.ONLY_PLAYER_CAN
+import com.mairwunnx.projectessentialscore.helpers.PERMISSION_LEVEL
 import com.mairwunnx.projectessentialspermissions.permissions.PermissionsAPI
 import com.mojang.brigadier.CommandDispatcher
-import com.mojang.brigadier.builder.LiteralArgumentBuilder
+import com.mojang.brigadier.builder.LiteralArgumentBuilder.literal
 import com.mojang.brigadier.context.CommandContext
 import net.minecraft.command.CommandSource
 import net.minecraft.util.math.BlockPos
@@ -21,7 +23,7 @@ object SetSpawnCommand {
         logger.info("    - register \"/setspawn\" command ...")
         aliases.forEach { command ->
             dispatcher.register(
-                LiteralArgumentBuilder.literal<CommandSource>(command).executes {
+                literal<CommandSource>(command).executes {
                     return@executes execute(it)
                 }
             )
@@ -39,7 +41,7 @@ object SetSpawnCommand {
                 SpawnModelBase.spawnModel.pitch = player.rotationPitch
                 SpawnModelBase.spawnModel.worldId = player.serverWorld.worldType.id
                 player.world.spawnPoint = BlockPos(player.posX, player.posY, player.posZ)
-                sendMsg(c.source, "spawn.set.success")
+                sendMsg("spawn", c.source, "spawn.set.success")
                 logger.info("New spawn point installed by ${player.name.string} with data: ")
                 logger.info("    - xpos: ${player.posX}")
                 logger.info("    - ypos: ${player.posY}")
@@ -48,11 +50,15 @@ object SetSpawnCommand {
                 logger.info("    - pitch: ${player.rotationPitch}")
                 logger.info("Executed command \"/${c.input}\" from ${player.name.string}")
             } else {
-                sendMsg(c.source, "spawn.set.restricted")
+                sendMsg("spawn", c.source, "spawn.set.restricted")
+                logger.info(
+                    PERMISSION_LEVEL
+                        .replace("%0", player.name.string)
+                        .replace("%1", "setspawn")
+                )
             }
         } else {
-            // todo: use ModErrorHelper
-            logger.info("Server failed to executing \"${c.input}\" command")
+            logger.info(ONLY_PLAYER_CAN.replace("%0", "setspawn"))
         }
         return 0
     }

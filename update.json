@@ -1,10 +1,10 @@
 {
-  "homepage": "https://github.com/ProjectEssentials/ProjectEssentials-Spawn/releases/tag/v1.14.4-1.0.0.2",
+  "homepage": "https://github.com/ProjectEssentials/ProjectEssentials-Spawn/releases/tag/v1.14.4-1.0.1.0",
   "1.14.4": {
-    "1.14.4-1.0.0.2": " - Updated permissions API dependency."
+    "1.14.4-1.0.1.0": " - Small mod behavior improvements."
   },
   "promos": {
-    "1.14.4-latest": "1.14.4-1.0.0.2",
-    "1.14.4-recommended": "1.14.4-1.0.0.2"
+    "1.14.4-latest": "1.14.4-1.0.1.0",
+    "1.14.4-recommended": "1.14.4-1.0.1.0"
   }
 }

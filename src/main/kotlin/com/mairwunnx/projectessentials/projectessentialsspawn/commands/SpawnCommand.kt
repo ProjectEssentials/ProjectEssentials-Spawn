@@ -1,9 +1,11 @@
 package com.mairwunnx.projectessentials.projectessentialsspawn.commands
 
-import com.mairwunnx.projectessentials.projectessentialsspawn.*
-import com.mairwunnx.projectessentials.projectessentialsspawn.extensions.isPlayerSender
-import com.mairwunnx.projectessentials.projectessentialsspawn.extensions.sendMsg
+import com.mairwunnx.projectessentials.projectessentialsspawn.EntryPoint
 import com.mairwunnx.projectessentials.projectessentialsspawn.models.SpawnModelBase
+import com.mairwunnx.projectessentialscore.extensions.isPlayerSender
+import com.mairwunnx.projectessentialscore.extensions.sendMsg
+import com.mairwunnx.projectessentialscore.helpers.ONLY_PLAYER_CAN
+import com.mairwunnx.projectessentialscore.helpers.PERMISSION_LEVEL
 import com.mairwunnx.projectessentialspermissions.permissions.PermissionsAPI
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.builder.LiteralArgumentBuilder.literal
@@ -47,13 +49,17 @@ object SpawnCommand {
             if (PermissionsAPI.hasPermission(playerName, "ess.spawn")) {
                 moveToSpawn(c.source.asPlayer())
                 logger.info("Executed command \"/${c.input}\" from $playerName")
-                sendMsg(c.source, "spawn.success")
+                sendMsg("spawn", c.source, "spawn.success")
             } else {
-                sendMsg(c.source, "spawn.restricted")
+                sendMsg("spawn", c.source, "spawn.restricted")
+                logger.info(
+                    PERMISSION_LEVEL
+                        .replace("%0", playerName)
+                        .replace("%1", "spawn")
+                )
             }
         } else {
-            // todo: use ModErrorHelper
-            logger.info("Server failed to executing \"${c.input}\" command")
+            logger.info(ONLY_PLAYER_CAN.replace("%0", "spawn"))
         }
         return 0
     }
@@ -75,7 +81,12 @@ object SpawnCommand {
         if (c.isPlayerSender()) {
             val playerName = c.source.asPlayer().name.string
             if (!PermissionsAPI.hasPermission(playerName, "ess.spawn.reload")) {
-                sendMsg(c.source, "spawn.reload.restricted")
+                sendMsg("spawn", c.source, "spawn.reload.restricted")
+                logger.info(
+                    PERMISSION_LEVEL
+                        .replace("%0", playerName)
+                        .replace("%1", "spawn reload")
+                )
                 return 0
             }
         }
@@ -84,7 +95,7 @@ object SpawnCommand {
         if (c.isPlayerSender()) {
             val playerName = c.source.asPlayer().name.string
             logger.info("Executed command \"/${c.input}\" from $playerName")
-            sendMsg(c.source, "spawn.reload.success")
+            sendMsg("spawn", c.source, "spawn.reload.success")
         } else {
             logger.info("World spawn configuration reloaded.")
         }
@@ -95,7 +106,12 @@ object SpawnCommand {
         if (c.isPlayerSender()) {
             val playerName = c.source.asPlayer().name.string
             if (!PermissionsAPI.hasPermission(playerName, "ess.spawn.save")) {
-                sendMsg(c.source, "spawn.save.restricted")
+                sendMsg("spawn", c.source, "spawn.save.restricted")
+                logger.info(
+                    PERMISSION_LEVEL
+                        .replace("%0", playerName)
+                        .replace("%1", "spawn save")
+                )
                 return 0
             }
         }
@@ -103,7 +119,7 @@ object SpawnCommand {
         if (c.isPlayerSender()) {
             val playerName = c.source.asPlayer().name.string
             logger.info("Executed command \"/${c.input}\" from $playerName")
-            sendMsg(c.source, "spawn.save.success")
+            sendMsg("spawn", c.source, "spawn.save.success")
         } else {
             logger.info("World spawn configuration saved.")
         }
@@ -114,32 +130,38 @@ object SpawnCommand {
         if (c.isPlayerSender()) {
             val playerName = c.source.asPlayer().name.string
             if (!PermissionsAPI.hasPermission(playerName, "ess.spawn.version")) {
-                sendMsg(c.source, "spawn.version.restricted")
+                sendMsg("spawn", c.source, "spawn.version.restricted")
+                logger.info(
+                    PERMISSION_LEVEL
+                        .replace("%0", playerName)
+                        .replace("%1", "spawn version")
+                )
                 return 0
             }
         }
         if (c.isPlayerSender()) {
             val playerName = c.source.asPlayer().name.string
             sendMsg(
+                "spawn",
                 c.source,
                 "spawn.version.success",
-                MOD_NAME,
-                MOD_VERSION,
-                MOD_MAINTAINER,
-                MOD_TARGET_FORGE,
-                MOD_TARGET_MC,
-                MOD_SOURCES_LINK,
-                MOD_TELEGRAM_LINK
+                EntryPoint.modInstance.modName,
+                EntryPoint.modInstance.modVersion,
+                EntryPoint.modInstance.modMaintainer,
+                EntryPoint.modInstance.modTargetForge,
+                EntryPoint.modInstance.modTargetMC,
+                EntryPoint.modInstance.modSources,
+                EntryPoint.modInstance.modTelegram
             )
             logger.info("Executed command \"/${c.input}\" from $playerName")
         } else {
-            logger.info("        $MOD_NAME")
-            logger.info("Version: $MOD_VERSION")
-            logger.info("Maintainer: $MOD_MAINTAINER")
-            logger.info("Target Forge version: $MOD_TARGET_FORGE")
-            logger.info("Target Minecraft version: $MOD_TARGET_MC")
-            logger.info("Source code: $MOD_SOURCES_LINK")
-            logger.info("Telegram chat: $MOD_TELEGRAM_LINK")
+            logger.info("        ${EntryPoint.modInstance.modName}")
+            logger.info("Version: ${EntryPoint.modInstance.modVersion}")
+            logger.info("Maintainer: ${EntryPoint.modInstance.modMaintainer}")
+            logger.info("Target Forge version: ${EntryPoint.modInstance.modTargetForge}")
+            logger.info("Target Minecraft version: ${EntryPoint.modInstance.modTargetMC}")
+            logger.info("Source code: ${EntryPoint.modInstance.modSources}")
+            logger.info("Telegram chat: ${EntryPoint.modInstance.modTelegram}")
         }
         return 0
     }

@@ -15,18 +15,18 @@ issueTrackerURL="https://github.com/ProjectEssentials/ProjectEssentials-Spawn/is
     Just controlling world spawn position for players.
     '''
 
-[[dependencies.projectessentialsspawn]]
-    modId="project_essentials"
+[[dependencies.projectessentialspermissions]]
+    modId="project_essentials_core"
     mandatory=true
-    versionRange="[0,)"
-    ordering="AFTER"
+    versionRange="[1,)"
+    ordering="NONE"
     side="BOTH"
 
 [[dependencies.projectessentialsspawn]]
     modId="project_essentials_permissions"
     mandatory=true
     versionRange="[0,)"
-    ordering="AFTER"
+    ordering="NONE"
     side="BOTH"
 
 [[dependencies.projectessentialsspawn]]

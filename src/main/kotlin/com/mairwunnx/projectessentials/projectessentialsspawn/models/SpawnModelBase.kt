@@ -1,7 +1,6 @@
 package com.mairwunnx.projectessentials.projectessentialsspawn.models
 
-import com.mairwunnx.projectessentials.projectessentialsspawn.helpers.MOD_CONFIG_FOLDER
-import com.mairwunnx.projectessentials.projectessentialsspawn.helpers.SPAWN_CONFIG
+import com.mairwunnx.projectessentialscore.helpers.MOD_CONFIG_FOLDER
 import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
@@ -13,6 +12,7 @@ import java.io.File
 
 @UseExperimental(UnstableDefault::class)
 object SpawnModelBase {
+    private val spawnConfig = MOD_CONFIG_FOLDER + File.separator + "spawn.json"
     private val logger = LogManager.getLogger()
     var spawnModel = SpawnModel()
     private val json = Json(
@@ -29,16 +29,16 @@ object SpawnModelBase {
     fun loadData() {
         logger.info("    - loading world spawn data ...")
         logger.debug("        - setup json configuration for parsing ...")
-        if (!File(SPAWN_CONFIG).exists()) {
+        if (!File(spawnConfig).exists()) {
             logger.warn("        - spawn config not exist! creating it now!")
             createConfigDirs(MOD_CONFIG_FOLDER)
             val defaultConfig = json.stringify(
                 SpawnModel.serializer(),
                 spawnModel
             )
-            File(SPAWN_CONFIG).writeText(defaultConfig)
+            File(spawnConfig).writeText(defaultConfig)
         }
-        val spawnConfigRaw = File(SPAWN_CONFIG).readText()
+        val spawnConfigRaw = File(spawnConfig).readText()
         spawnModel = Json.parse(SpawnModel.serializer(), spawnConfigRaw)
     }
 
@@ -58,9 +58,10 @@ object SpawnModelBase {
             SpawnModel.serializer(),
             spawnModel
         )
-        File(SPAWN_CONFIG).writeText(spawnConfig)
+        File(this.spawnConfig).writeText(spawnConfig)
     }
 
+    @Suppress("SameParameterValue")
     private fun createConfigDirs(path: String) {
         logger.info("        - creating config directory for world spawn data ($path)")
         val configDirectory = File(path)
