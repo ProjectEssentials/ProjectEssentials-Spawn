@@ -40,6 +40,7 @@ object SpawnModelBase {
         }
         val spawnConfigRaw = File(spawnConfig).readText()
         spawnModel = Json.parse(SpawnModel.serializer(), spawnConfigRaw)
+        logger.info("Spawn config loaded: $spawnModel")
     }
 
     fun assignSpawn(server: MinecraftServer) {
