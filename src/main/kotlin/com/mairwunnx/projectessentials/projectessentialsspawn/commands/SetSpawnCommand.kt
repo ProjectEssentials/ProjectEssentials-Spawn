@@ -29,6 +29,7 @@ object SetSpawnCommand {
                 }
             )
         }
+        applyCommandAliases()
     }
 
     private fun applyCommandAliases() {
