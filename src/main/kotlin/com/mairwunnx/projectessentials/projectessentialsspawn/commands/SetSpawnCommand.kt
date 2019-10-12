@@ -1,6 +1,7 @@
 package com.mairwunnx.projectessentials.projectessentialsspawn.commands
 
 import com.mairwunnx.projectessentials.projectessentialsspawn.models.SpawnModelBase
+import com.mairwunnx.projectessentialscooldown.essentials.CommandsAliases
 import com.mairwunnx.projectessentialscore.extensions.isPlayerSender
 import com.mairwunnx.projectessentialscore.extensions.sendMsg
 import com.mairwunnx.projectessentialscore.helpers.ONLY_PLAYER_CAN
@@ -27,6 +28,18 @@ object SetSpawnCommand {
                     return@executes execute(it)
                 }
             )
+        }
+    }
+
+    private fun applyCommandAliases() {
+        try {
+            Class.forName(
+                "com.mairwunnx.projectessentialscooldown.essentials.CommandsAliases"
+            )
+            CommandsAliases.aliases["setspawn"] = aliases.toMutableList()
+            logger.info("        - applying aliases: $aliases")
+        } catch (_: ClassNotFoundException) {
+            // ignored
         }
     }
 

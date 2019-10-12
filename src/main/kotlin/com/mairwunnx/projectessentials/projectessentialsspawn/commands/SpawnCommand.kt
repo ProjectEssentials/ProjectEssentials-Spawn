@@ -2,6 +2,7 @@ package com.mairwunnx.projectessentials.projectessentialsspawn.commands
 
 import com.mairwunnx.projectessentials.projectessentialsspawn.EntryPoint
 import com.mairwunnx.projectessentials.projectessentialsspawn.models.SpawnModelBase
+import com.mairwunnx.projectessentialscooldown.essentials.CommandsAliases
 import com.mairwunnx.projectessentialscore.extensions.isPlayerSender
 import com.mairwunnx.projectessentialscore.extensions.sendMsg
 import com.mairwunnx.projectessentialscore.helpers.ONLY_PLAYER_CAN
@@ -40,6 +41,19 @@ object SpawnCommand {
                     }
                 )
             )
+        }
+        applyCommandAliases()
+    }
+
+    private fun applyCommandAliases() {
+        try {
+            Class.forName(
+                "com.mairwunnx.projectessentialscooldown.essentials.CommandsAliases"
+            )
+            CommandsAliases.aliases["spawn"] = aliases.toMutableList()
+            logger.info("        - applying aliases: $aliases")
+        } catch (_: ClassNotFoundException) {
+            // ignored
         }
     }
 
