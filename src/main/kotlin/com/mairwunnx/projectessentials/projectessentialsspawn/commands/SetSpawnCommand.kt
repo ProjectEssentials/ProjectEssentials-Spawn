@@ -62,7 +62,7 @@ object SetSpawnCommand {
                 logger.info("    - zpos: ${player.posZ}")
                 logger.info("    - yaw: ${player.rotationYaw}")
                 logger.info("    - pitch: ${player.rotationPitch}")
-                logger.info("Executed command \"/${c.input}\" from ${player.name.string}")
+                logger.info("Executed command \"${c.input}\" from ${player.name.string}")
             } else {
                 sendMsg("spawn", c.source, "spawn.set.restricted")
                 logger.info(

@@ -62,7 +62,7 @@ object SpawnCommand {
             val playerName = c.source.asPlayer().name.string
             if (PermissionsAPI.hasPermission(playerName, "ess.spawn")) {
                 moveToSpawn(c.source.asPlayer())
-                logger.info("Executed command \"/${c.input}\" from $playerName")
+                logger.info("Executed command \"${c.input}\" from $playerName")
                 sendMsg("spawn", c.source, "spawn.success")
             } else {
                 sendMsg("spawn", c.source, "spawn.restricted")
@@ -108,7 +108,7 @@ object SpawnCommand {
         SpawnModelBase.assignSpawn(c.source.server)
         if (c.isPlayerSender()) {
             val playerName = c.source.asPlayer().name.string
-            logger.info("Executed command \"/${c.input}\" from $playerName")
+            logger.info("Executed command \"${c.input}\" from $playerName")
             sendMsg("spawn", c.source, "spawn.reload.success")
         } else {
             logger.info("World spawn configuration reloaded.")
@@ -132,7 +132,7 @@ object SpawnCommand {
         SpawnModelBase.saveData()
         if (c.isPlayerSender()) {
             val playerName = c.source.asPlayer().name.string
-            logger.info("Executed command \"/${c.input}\" from $playerName")
+            logger.info("Executed command \"${c.input}\" from $playerName")
             sendMsg("spawn", c.source, "spawn.save.success")
         } else {
             logger.info("World spawn configuration saved.")
@@ -167,7 +167,7 @@ object SpawnCommand {
                 EntryPoint.modInstance.modSources,
                 EntryPoint.modInstance.modTelegram
             )
-            logger.info("Executed command \"/${c.input}\" from $playerName")
+            logger.info("Executed command \"${c.input}\" from $playerName")
         } else {
             logger.info("        ${EntryPoint.modInstance.modName}")
             logger.info("Version: ${EntryPoint.modInstance.modVersion}")
