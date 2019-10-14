@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos
 import org.apache.logging.log4j.LogManager
 
 object SetSpawnCommand {
-    private val aliases = arrayOf(
+    private val aliases = listOf(
         "setspawn", "esetspawn", "spawnpoint", "setworldspawn"
     )
     private val logger = LogManager.getLogger()

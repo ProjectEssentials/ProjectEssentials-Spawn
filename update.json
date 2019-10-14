@@ -2,7 +2,10 @@
   "homepage": "https://github.com/ProjectEssentials/ProjectEssentials-Spawn/releases/tag/v1.14.4-1.1.0.0",
   "1.14.4": {
     "1.14.4-1.1.0.0": " - Added logging loaded spawn data.\n - Added ProjectEssentials-Cooldown dependencity.\n - Added assigning aliases for Cooldown module.",
-    "1.14.4-1.0.1.0": " - Small mod behavior improvements."
+    "1.14.4-1.0.1.0": " - Small mod behavior improvements.",
+    "1.14.4-1.0.0.2": " - Updated Project Essentials Permissions API dependency.",
+    "1.14.4-1.0.0.1": " - Fixed some wrong meta information for mod.",
+    "1.14.4-1.0.0.0": " - Initial release of Project Essentials Spawn as Project Essentials part."
   },
   "promos": {
     "1.14.4-latest": "1.14.4-1.1.0.0",
