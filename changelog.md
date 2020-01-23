@@ -25,9 +25,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Double slash for command in logs.
 - Package naming.
-- Redundant logger messages.
 
 ### Removed
+- Redundant logger messages.
 - Java plugin from buildscript.
 - Permissions module from mandatory dependencies.
 - `UseExperimental` annotation for `SpawnModelBase` class.
