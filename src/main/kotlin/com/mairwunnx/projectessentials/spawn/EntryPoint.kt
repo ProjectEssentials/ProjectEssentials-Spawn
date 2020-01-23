@@ -1,9 +1,9 @@
 package com.mairwunnx.projectessentials.spawn
 
+import com.mairwunnx.projectessentials.core.EssBase
 import com.mairwunnx.projectessentials.spawn.commands.SetSpawnCommand
 import com.mairwunnx.projectessentials.spawn.commands.SpawnCommand
 import com.mairwunnx.projectessentials.spawn.models.SpawnModelBase
-import com.mairwunnx.projectessentialscore.EssBase
 import com.mojang.brigadier.CommandDispatcher
 import net.minecraft.command.CommandSource
 import net.minecraft.entity.player.ServerPlayerEntity
@@ -27,15 +27,12 @@ class EntryPoint : EssBase() {
         modVersion = "1.14.4-1.1.1"
         logBaseInfo()
         validateForgeVersion()
-        logger.debug("Register event bus for $modName mod ...")
         MinecraftForge.EVENT_BUS.register(this)
-        logger.info("Loading $modName world spawn data ...")
         SpawnModelBase.loadData()
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
     fun onServerStarting(event: FMLServerStartingEvent) {
-        logger.info("$modName starting mod loading ...")
         registerCommands(event.server.commandManager.dispatcher)
         processFirstSession(event)
         SpawnModelBase.assignSpawn(event.server)
@@ -66,7 +63,6 @@ class EntryPoint : EssBase() {
     private fun registerCommands(
         cmdDispatcher: CommandDispatcher<CommandSource>
     ) {
-        logger.info("Command registering is starting ...")
         SpawnCommand.register(cmdDispatcher)
         SetSpawnCommand.register(cmdDispatcher)
     }
@@ -74,8 +70,6 @@ class EntryPoint : EssBase() {
     @Suppress("UNUSED_PARAMETER")
     @SubscribeEvent
     fun onServerStopping(it: FMLServerStoppingEvent) {
-        logger.info("Shutting down $modName mod ...")
-        logger.info("    - Saving world spawn data ...")
         SpawnModelBase.saveData()
     }
 
