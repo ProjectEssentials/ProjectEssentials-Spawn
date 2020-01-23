@@ -1,6 +1,7 @@
 package com.mairwunnx.projectessentials.spawn
 
 import com.mairwunnx.projectessentials.core.EssBase
+import com.mairwunnx.projectessentials.permissions.permissions.PermissionsAPI
 import com.mairwunnx.projectessentials.spawn.commands.SetSpawnCommand
 import com.mairwunnx.projectessentials.spawn.commands.SpawnCommand
 import com.mairwunnx.projectessentials.spawn.models.SpawnModelBase
@@ -63,6 +64,7 @@ class EntryPoint : EssBase() {
     private fun registerCommands(
         cmdDispatcher: CommandDispatcher<CommandSource>
     ) {
+        loadAdditionalModules()
         SpawnCommand.register(cmdDispatcher)
         SetSpawnCommand.register(cmdDispatcher)
     }
@@ -80,7 +82,36 @@ class EntryPoint : EssBase() {
         }
     }
 
+    private fun loadAdditionalModules() {
+        try {
+            Class.forName(
+                "com.mairwunnx.projectessentials.cooldown.essentials.CommandsAliases"
+            )
+            cooldownsInstalled = true
+        } catch (_: ClassNotFoundException) {
+            // ignored
+        }
+
+        try {
+            Class.forName(
+                "com.mairwunnx.projectessentials.permissions.permissions.PermissionsAPI"
+            )
+            permissionsInstalled = true
+        } catch (_: ClassNotFoundException) {
+            // ignored
+        }
+    }
+
     companion object {
         lateinit var modInstance: EntryPoint
+        var cooldownsInstalled: Boolean = false
+        var permissionsInstalled: Boolean = false
+
+        fun hasPermission(player: ServerPlayerEntity, node: String, opLevel: Int = 4): Boolean =
+            if (permissionsInstalled) {
+                PermissionsAPI.hasPermission(player.name.string, node)
+            } else {
+                player.server.opPermissionLevel >= opLevel
+            }
     }
 }
