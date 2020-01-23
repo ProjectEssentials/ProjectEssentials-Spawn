@@ -1,6 +1,6 @@
-package com.mairwunnx.projectessentials.projectessentialsspawn.commands
+package com.mairwunnx.projectessentials.spawn.commands
 
-import com.mairwunnx.projectessentials.projectessentialsspawn.models.SpawnModelBase
+import com.mairwunnx.projectessentials.spawn.models.SpawnModelBase
 import com.mairwunnx.projectessentialscooldown.essentials.CommandsAliases
 import com.mairwunnx.projectessentialscore.extensions.isPlayerSender
 import com.mairwunnx.projectessentialscore.extensions.sendMsg

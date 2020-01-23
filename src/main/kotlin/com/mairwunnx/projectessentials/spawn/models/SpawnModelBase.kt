@@ -1,4 +1,4 @@
-package com.mairwunnx.projectessentials.projectessentialsspawn.models
+package com.mairwunnx.projectessentials.spawn.models
 
 import com.mairwunnx.projectessentialscore.helpers.MOD_CONFIG_FOLDER
 import kotlinx.serialization.UnstableDefault

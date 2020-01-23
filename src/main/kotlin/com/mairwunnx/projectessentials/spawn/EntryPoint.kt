@@ -1,8 +1,8 @@
-package com.mairwunnx.projectessentials.projectessentialsspawn
+package com.mairwunnx.projectessentials.spawn
 
-import com.mairwunnx.projectessentials.projectessentialsspawn.commands.SetSpawnCommand
-import com.mairwunnx.projectessentials.projectessentialsspawn.commands.SpawnCommand
-import com.mairwunnx.projectessentials.projectessentialsspawn.models.SpawnModelBase
+import com.mairwunnx.projectessentials.spawn.commands.SetSpawnCommand
+import com.mairwunnx.projectessentials.spawn.commands.SpawnCommand
+import com.mairwunnx.projectessentials.spawn.models.SpawnModelBase
 import com.mairwunnx.projectessentialscore.EssBase
 import com.mojang.brigadier.CommandDispatcher
 import net.minecraft.command.CommandSource

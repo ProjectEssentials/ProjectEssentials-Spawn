@@ -1,4 +1,4 @@
-package com.mairwunnx.projectessentials.projectessentialsspawn.models
+package com.mairwunnx.projectessentials.spawn.models
 
 import kotlinx.serialization.Serializable
 
