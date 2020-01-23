@@ -1,12 +1,13 @@
 package com.mairwunnx.projectessentials.spawn.commands
 
+import com.mairwunnx.projectessentials.cooldown.essentials.CommandsAliases
+import com.mairwunnx.projectessentials.core.extensions.isPlayerSender
+import com.mairwunnx.projectessentials.core.extensions.sendMsg
+import com.mairwunnx.projectessentials.core.helpers.ONLY_PLAYER_CAN
+import com.mairwunnx.projectessentials.core.helpers.PERMISSION_LEVEL
+import com.mairwunnx.projectessentials.spawn.EntryPoint
+import com.mairwunnx.projectessentials.spawn.EntryPoint.Companion.hasPermission
 import com.mairwunnx.projectessentials.spawn.models.SpawnModelBase
-import com.mairwunnx.projectessentialscooldown.essentials.CommandsAliases
-import com.mairwunnx.projectessentialscore.extensions.isPlayerSender
-import com.mairwunnx.projectessentialscore.extensions.sendMsg
-import com.mairwunnx.projectessentialscore.helpers.ONLY_PLAYER_CAN
-import com.mairwunnx.projectessentialscore.helpers.PERMISSION_LEVEL
-import com.mairwunnx.projectessentialspermissions.permissions.PermissionsAPI
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.builder.LiteralArgumentBuilder.literal
 import com.mojang.brigadier.context.CommandContext
@@ -21,33 +22,25 @@ object SetSpawnCommand {
     private val logger = LogManager.getLogger()
 
     fun register(dispatcher: CommandDispatcher<CommandSource>) {
-        logger.info("    - register \"/setspawn\" command ...")
+        logger.info("Register \"/setspawn\" command")
+        applyCommandAliases()
+
         aliases.forEach { command ->
             dispatcher.register(
-                literal<CommandSource>(command).executes {
-                    return@executes execute(it)
-                }
+                literal<CommandSource>(command).executes(::execute)
             )
         }
-        applyCommandAliases()
     }
 
     private fun applyCommandAliases() {
-        try {
-            Class.forName(
-                "com.mairwunnx.projectessentialscooldown.essentials.CommandsAliases"
-            )
-            CommandsAliases.aliases["setspawn"] = aliases.toMutableList()
-            logger.info("        - applying aliases: $aliases")
-        } catch (_: ClassNotFoundException) {
-            // ignored
-        }
+        if (!EntryPoint.cooldownsInstalled) return
+        CommandsAliases.aliases["setspawn"] = aliases.toMutableList()
     }
 
     private fun execute(c: CommandContext<CommandSource>): Int {
         if (c.isPlayerSender()) {
             val player = c.source.asPlayer()
-            if (PermissionsAPI.hasPermission(player.name.string, "ess.spawn.set")) {
+            if (hasPermission(player, "ess.spawn.set")) {
                 SpawnModelBase.spawnModel.xPos = player.posX
                 SpawnModelBase.spawnModel.yPos = player.posY
                 SpawnModelBase.spawnModel.zPos = player.posZ
