@@ -1,6 +1,7 @@
 {
-  "homepage": "https://github.com/ProjectEssentials/ProjectEssentials-Spawn/releases/tag/v1.14.4-1.1.0.0",
+  "homepage": "https://github.com/ProjectEssentials/ProjectEssentials-Spawn/releases/tag/v1.14.4-1.1.1",
   "1.14.4": {
+    "1.14.4-1.1.1": " - Added german support by @BixelPitch\n - Added checking on availability cooldown and permissions modules.\n - Added compatibility with 1.1.0 and 1.1.0 permissions \\ core module versions.\n - Gradle wrapper updated to `5.6.4`.\n - `Kotlin` and `KotlinX Serialization` updated.\n - All essentials dependencies updated.\n - Usings `jsonInstance` from core module.\n - Double slash for command in logs fixed.\n - Package naming fixed.\n - Redundant logger messages removed.\n - Permissions module removed from mandatory dependencies.\n - ",
     "1.14.4-1.1.0.0": " - Added logging loaded spawn data.\n - Added ProjectEssentials-Cooldown dependencity.\n - Added assigning aliases for Cooldown module.",
     "1.14.4-1.0.1.0": " - Small mod behavior improvements.",
     "1.14.4-1.0.0.2": " - Updated Project Essentials Permissions API dependency.",
@@ -8,7 +9,7 @@
     "1.14.4-1.0.0.0": " - Initial release of Project Essentials Spawn as Project Essentials part."
   },
   "promos": {
-    "1.14.4-latest": "1.14.4-1.1.0.0",
-    "1.14.4-recommended": "1.14.4-1.1.0.0"
+    "1.14.4-latest": "1.14.4-1.1.1",
+    "1.14.4-recommended": "1.14.4-1.1.1"
   }
 }
