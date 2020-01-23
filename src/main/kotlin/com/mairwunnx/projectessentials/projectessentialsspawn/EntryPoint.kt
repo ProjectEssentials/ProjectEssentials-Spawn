@@ -24,7 +24,7 @@ class EntryPoint : EssBase() {
 
     init {
         modInstance = this
-        modVersion = "1.14.4-1.1.0.0"
+        modVersion = "1.14.4-1.1.1"
         logBaseInfo()
         validateForgeVersion()
         logger.debug("Register event bus for $modName mod ...")
