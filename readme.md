@@ -1,37 +1,29 @@
-## 🎊 Project Essentials: Spawn
+# ![image](assets/spawn_social.png)
 
-> ## Forge modification for controlling world spawn point on server and client.
+## Lets you control where player spawn for forge server and client
 
-#### ❗ Compatibility with forge `28.0.X` version.
+### Explore
 
-## 🎮 Installation instruction:
-> ##### Just move Project Essentials Spawn-1.14.4-1.X.X.X.jar to mods directory:
+#### [Download mod](https://github.com/ProjectEssentials/ProjectEssentials-Spawn/releases/download/v1.14.4-1.1.1/Project.Essentials.Spawn-1.14.4-1.1.1.jar) · [How to install](documentation/how-install.md) · [Troubleshooting](https://github.com/ProjectEssentials/ProjectEssentials-Spawn/issues/new/choose) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/ProjectEssentials-Spawn) · [Change log](changelog.md)
 
-> ##### Important note: don't forget install mod dependencies!
-  - core: https://github.com/ProjectEssentials/ProjectEssentials-Core/releases
-  - permissions: https://github.com/ProjectEssentials/ProjectEssentials-Permissions/releases
+### Commands and Permissions
 
-```
-.
-├── assets
-├── config
-├── libraries
-├── mods (that's how it should be)
-│   ├── Project Essentials Spawn-1.14.4-1.X.X.X.jar
-│   ├── Project Essentials Core-MOD-1.14.4-1.X.X.X.jar.
-│   └── Project Essentials Permissions-1.14.4-1.X.X.X.jar.
-└── ...
-```
+|Command name      |Aliases                                      |Permission           |Op level  |Description  |
+|-----             |-----                                        |----                 |----      |----         |
+|`/spawn`          |`/espawn`                                    |`ess.spawn`          |`0`       |Teleport you to server spawn point.|
+|`/setspawn`       |`/esetspawn`, `spawnpoint`, `setworldspawn`  |`ess.spawn.set`      |`4`       |Set new spawn point at player position *(taken into account: x, y, z positions, camera rotate yaw and camera rotate pitch)* on server or client world.|
+|`/spawn reload`   | none                                        |`ess.spawn.reload`   |`4`       |Just reload spawn configuration **WITHOUT SAVING!**|
+|`/spawn save`     | none                                        |`ess.spawn.save`     |`4`       |Save spawn configuration.|
+|`/spawn version`  | none                                        |`ess.spawn.version`  |`3`       |Print in command line version and some info about spawn module. If command executed by player then it information will be sent for player in chat.|
 
-```
-Additional information:
-    - kotlin-std lib version: 1.3.50
-    - kotlinx serialization version: 0.12.0
-    - target jvm version: 1.8
-```
+### Compatibility
 
-### After you got the dependencies and the library itself:
+This mod branch supported forge version `28.0.X` and `28.1.X` (Minecraft `1.14.4`).
 
-# [getting started with read the commands documentation](./documentation/in-using.md)
+### Credits
 
-> ## Made with 💕 by [MairwunNx](https://mairwunnx.github.io/)
+- Author: Pavel Erokhin [@mairwunnx](https://github.com/mairwunnx)
+- [JetBrains](https://www.jetbrains.com/) for Licenses 🥰
+- And you for contibuting and using it 😊🤗
+
+[![image](https://github.com/ProjectEssentials/ProjectEssentials-Core/raw/MC-1.14.4/assets/support_social.png)](https://ko-fi.com/mairwunnx)
