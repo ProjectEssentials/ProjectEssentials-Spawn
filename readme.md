@@ -18,12 +18,12 @@
 
 ### Dependencies
 
-#### Mandatory
-
 ```none
     - mandatory (game will not start without a mod)
     - recommended (without a mod, game can start, but I recommend using it)
 ```
+
+#### Mandatory
 
 #### [Project Essentials Core](https://github.com/ProjectEssentials/ProjectEssentials-Core/releases)
 
