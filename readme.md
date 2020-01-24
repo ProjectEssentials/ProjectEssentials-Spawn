@@ -16,6 +16,16 @@
 |`/spawn save`     | none                                        |`ess.spawn.save`     |`4`       |Save spawn configuration.|
 |`/spawn version`  | none                                        |`ess.spawn.version`  |`3`       |Print in command line version and some info about spawn module. If command executed by player then it information will be sent for player in chat.|
 
+### Dependencies
+
+#### Mandatory
+
+#### [Project Essentials Core](https://github.com/ProjectEssentials/ProjectEssentials-Core/releases)
+
+#### Recommended
+
+#### [Project Essentials Permissions](https://github.com/ProjectEssentials/ProjectEssentials-Permissions/releases) · [Project Essentials Cooldown](https://github.com/ProjectEssentials/ProjectEssentials-Cooldown/releases)
+
 ### Compatibility
 
 This mod branch supported forge version `28.0.X` and `28.1.X` (Minecraft `1.14.4`).
