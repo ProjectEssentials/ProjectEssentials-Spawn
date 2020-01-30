@@ -4,17 +4,7 @@
 
 ### Explore
 
-#### [Download mod](https://github.com/ProjectEssentials/ProjectEssentials-Spawn/releases/download/v1.14.4-1.1.1/Project.Essentials.Spawn-1.14.4-1.1.1.jar) · [How to install](documentation/how-install.md) · [Troubleshooting](https://github.com/ProjectEssentials/ProjectEssentials-Spawn/issues/new/choose) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/ProjectEssentials-Spawn) · [Change log](changelog.md)
-
-### Commands and Permissions
-
-|Command name      |Aliases                                      |Permission           |Op level  |Description  |
-|-----             |-----                                        |----                 |----      |----         |
-|`/spawn`          |`/espawn`                                    |`ess.spawn`          |`0`       |Teleport you to server spawn point.|
-|`/setspawn`       |`/esetspawn`, `spawnpoint`, `setworldspawn`  |`ess.spawn.set`      |`4`       |Set new spawn point at player position *(taken into account: x, y, z positions, camera rotate yaw and camera rotate pitch)* on server or client world.|
-|`/spawn reload`   | none                                        |`ess.spawn.reload`   |`4`       |Just reload spawn configuration **WITHOUT SAVING!**|
-|`/spawn save`     | none                                        |`ess.spawn.save`     |`4`       |Save spawn configuration.|
-|`/spawn version`  | none                                        |`ess.spawn.version`  |`3`       |Print in command line version and some info about spawn module. If command executed by player then it information will be sent for player in chat.|
+#### [Download mod](https://github.com/ProjectEssentials/ProjectEssentials-Spawn/releases/download/v1.14.4-1.1.1/Project.Essentials.Spawn-1.14.4-1.1.1.jar) · [How to install](https://mairwunnx.gitbook.io/project-essentials/project-essentials-spawn#how-to-install) · [Commands](https://mairwunnx.gitbook.io/project-essentials/project-essentials-spawn#commands-and-permissions) · [Configuration](https://mairwunnx.gitbook.io/project-essentials/project-essentials-spawn#configuration) · [Troubleshooting](https://github.com/ProjectEssentials/ProjectEssentials-Spawn/issues/new/choose) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/ProjectEssentials-Spawn) · [Change log](changelog.md)
 
 ### Dependencies
 
