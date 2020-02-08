@@ -41,18 +41,20 @@ object SetSpawnCommand {
         if (c.isPlayerSender()) {
             val player = c.source.asPlayer()
             if (hasPermission(player, "ess.spawn.set")) {
-                SpawnModelBase.spawnModel.xPos = player.posX
-                SpawnModelBase.spawnModel.yPos = player.posY
-                SpawnModelBase.spawnModel.zPos = player.posZ
+                SpawnModelBase.spawnModel.xPos = player.positionVector.x
+                SpawnModelBase.spawnModel.yPos = player.positionVector.y
+                SpawnModelBase.spawnModel.zPos = player.positionVector.z
                 SpawnModelBase.spawnModel.yaw = player.rotationYaw
                 SpawnModelBase.spawnModel.pitch = player.rotationPitch
                 SpawnModelBase.spawnModel.worldId = player.serverWorld.worldType.id
-                player.world.spawnPoint = BlockPos(player.posX, player.posY, player.posZ)
+                player.world.spawnPoint = BlockPos(
+                    player.positionVector.x, player.positionVector.y, player.positionVector.z
+                )
                 sendMsg("spawn", c.source, "spawn.set.success")
                 logger.info("New spawn point installed by ${player.name.string} with data: ")
-                logger.info("    - xpos: ${player.posX}")
-                logger.info("    - ypos: ${player.posY}")
-                logger.info("    - zpos: ${player.posZ}")
+                logger.info("    - xpos: ${player.positionVector.x}")
+                logger.info("    - ypos: ${player.positionVector.y}")
+                logger.info("    - zpos: ${player.positionVector.z}")
                 logger.info("    - yaw: ${player.rotationYaw}")
                 logger.info("    - pitch: ${player.rotationPitch}")
                 logger.info("Executed command \"${c.input}\" from ${player.name.string}")
