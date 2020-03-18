@@ -2,6 +2,8 @@ package com.mairwunnx.projectessentials.spawn
 
 import com.mairwunnx.projectessentials.core.EssBase
 import com.mairwunnx.projectessentials.core.backlocation.BackLocationProvider
+import com.mairwunnx.projectessentials.core.configuration.localization.LocalizationConfigurationUtils
+import com.mairwunnx.projectessentials.core.localization.processLocalizations
 import com.mairwunnx.projectessentials.home.HomeAPI
 import com.mairwunnx.projectessentials.permissions.permissions.PermissionsAPI
 import com.mairwunnx.projectessentials.spawn.commands.SetSpawnCommand
@@ -32,6 +34,19 @@ class EntryPoint : EssBase() {
         validateForgeVersion()
         MinecraftForge.EVENT_BUS.register(this)
         SpawnModelBase.loadData()
+        loadLocalization()
+    }
+
+    private fun loadLocalization() {
+        if (LocalizationConfigurationUtils.getConfig().enabled) {
+            processLocalizations(
+                EntryPoint::class.java, listOf(
+                    "/assets/projectessentialsspawn/lang/de_de.json",
+                    "/assets/projectessentialsspawn/lang/ru_ru.json",
+                    "/assets/projectessentialsspawn/lang/en_us.json"
+                )
+            )
+        }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
