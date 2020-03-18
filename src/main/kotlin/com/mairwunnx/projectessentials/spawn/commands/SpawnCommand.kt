@@ -3,13 +3,13 @@ package com.mairwunnx.projectessentials.spawn.commands
 import com.mairwunnx.projectessentials.cooldown.essentials.CommandsAliases
 import com.mairwunnx.projectessentials.core.backlocation.BackLocationProvider
 import com.mairwunnx.projectessentials.core.extensions.isPlayerSender
-import com.mairwunnx.projectessentials.core.extensions.sendMsg
-import com.mairwunnx.projectessentials.core.helpers.ONLY_PLAYER_CAN
-import com.mairwunnx.projectessentials.core.helpers.PERMISSION_LEVEL
+import com.mairwunnx.projectessentials.core.helpers.throwOnlyPlayerCan
+import com.mairwunnx.projectessentials.core.helpers.throwPermissionLevel
 import com.mairwunnx.projectessentials.spawn.EntryPoint
 import com.mairwunnx.projectessentials.spawn.EntryPoint.Companion.hasPermission
 import com.mairwunnx.projectessentials.spawn.EntryPoint.Companion.modInstance
 import com.mairwunnx.projectessentials.spawn.models.SpawnModelBase
+import com.mairwunnx.projectessentials.spawn.sendMessage
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.builder.LiteralArgumentBuilder.literal
 import com.mojang.brigadier.context.CommandContext
@@ -51,17 +51,13 @@ object SpawnCommand {
             if (hasPermission(c.source.asPlayer(), "ess.spawn", 0)) {
                 moveToSpawn(c.source.asPlayer())
                 logger.info("Executed command \"${c.input}\" from $playerName")
-                sendMsg("spawn", c.source, "spawn.success")
+                sendMessage(c.source, "success")
             } else {
-                sendMsg("spawn", c.source, "spawn.restricted")
-                logger.info(
-                    PERMISSION_LEVEL
-                        .replace("%0", playerName)
-                        .replace("%1", "spawn")
-                )
+                sendMessage(c.source, "restricted")
+                throwPermissionLevel(playerName, "spawn")
             }
         } else {
-            logger.info(ONLY_PLAYER_CAN.replace("%0", "spawn"))
+            throwOnlyPlayerCan("spawn")
         }
         return 0
     }
@@ -85,12 +81,8 @@ object SpawnCommand {
         if (c.isPlayerSender()) {
             val playerName = c.source.asPlayer().name.string
             if (!hasPermission(c.source.asPlayer(), "ess.spawn.reload")) {
-                sendMsg("spawn", c.source, "spawn.reload.restricted")
-                logger.info(
-                    PERMISSION_LEVEL
-                        .replace("%0", playerName)
-                        .replace("%1", "spawn reload")
-                )
+                sendMessage(c.source, "reload.restricted")
+                throwPermissionLevel(playerName, "spawn reload")
                 return 0
             }
         }
@@ -99,7 +91,7 @@ object SpawnCommand {
         if (c.isPlayerSender()) {
             val playerName = c.source.asPlayer().name.string
             logger.info("Executed command \"${c.input}\" from $playerName")
-            sendMsg("spawn", c.source, "spawn.reload.success")
+            sendMessage(c.source, "reload.success")
         } else {
             logger.info("World spawn configuration reloaded.")
         }
@@ -110,12 +102,8 @@ object SpawnCommand {
         if (c.isPlayerSender()) {
             val playerName = c.source.asPlayer().name.string
             if (!hasPermission(c.source.asPlayer(), "ess.spawn.save")) {
-                sendMsg("spawn", c.source, "spawn.save.restricted")
-                logger.info(
-                    PERMISSION_LEVEL
-                        .replace("%0", playerName)
-                        .replace("%1", "spawn save")
-                )
+                sendMessage(c.source, "save.restricted")
+                throwPermissionLevel(playerName, "spawn save")
                 return 0
             }
         }
@@ -123,7 +111,7 @@ object SpawnCommand {
         if (c.isPlayerSender()) {
             val playerName = c.source.asPlayer().name.string
             logger.info("Executed command \"${c.input}\" from $playerName")
-            sendMsg("spawn", c.source, "spawn.save.success")
+            sendMessage(c.source, "save.success")
         } else {
             logger.info("World spawn configuration saved.")
         }
@@ -134,21 +122,16 @@ object SpawnCommand {
         if (c.isPlayerSender()) {
             val playerName = c.source.asPlayer().name.string
             if (!hasPermission(c.source.asPlayer(), "ess.spawn.version", 3)) {
-                sendMsg("spawn", c.source, "spawn.version.restricted")
-                logger.info(
-                    PERMISSION_LEVEL
-                        .replace("%0", playerName)
-                        .replace("%1", "spawn version")
-                )
+                sendMessage(c.source, "version.restricted")
+                throwPermissionLevel(playerName, "spawn version")
                 return 0
             }
         }
         if (c.isPlayerSender()) {
             val playerName = c.source.asPlayer().name.string
-            sendMsg(
-                "spawn",
+            sendMessage(
                 c.source,
-                "spawn.version.success",
+                "version.success",
                 modInstance.modName,
                 modInstance.modVersion,
                 modInstance.modMaintainer,
