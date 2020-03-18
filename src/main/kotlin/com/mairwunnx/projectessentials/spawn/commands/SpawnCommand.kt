@@ -1,6 +1,7 @@
 package com.mairwunnx.projectessentials.spawn.commands
 
 import com.mairwunnx.projectessentials.cooldown.essentials.CommandsAliases
+import com.mairwunnx.projectessentials.core.backlocation.BackLocationProvider
 import com.mairwunnx.projectessentials.core.extensions.isPlayerSender
 import com.mairwunnx.projectessentials.core.extensions.sendMsg
 import com.mairwunnx.projectessentials.core.helpers.ONLY_PLAYER_CAN
@@ -66,6 +67,8 @@ object SpawnCommand {
     }
 
     fun moveToSpawn(player: ServerPlayerEntity) {
+        BackLocationProvider.commit(player)
+
         val xPos = SpawnModelBase.spawnModel.xPos
         val yPos = SpawnModelBase.spawnModel.yPos
         val zPos = SpawnModelBase.spawnModel.zPos
