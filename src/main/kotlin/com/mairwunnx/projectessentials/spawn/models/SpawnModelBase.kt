@@ -32,6 +32,7 @@ object SpawnModelBase {
         val xPos = spawnModel.xPos
         val yPos = spawnModel.yPos
         val zPos = spawnModel.zPos
+        // todo: configure dim type.
         server.getWorld(DimensionType.OVERWORLD).spawnPoint = BlockPos(
             xPos, yPos, zPos
         )

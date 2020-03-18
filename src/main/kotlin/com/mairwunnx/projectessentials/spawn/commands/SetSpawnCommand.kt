@@ -2,12 +2,12 @@ package com.mairwunnx.projectessentials.spawn.commands
 
 import com.mairwunnx.projectessentials.cooldown.essentials.CommandsAliases
 import com.mairwunnx.projectessentials.core.extensions.isPlayerSender
-import com.mairwunnx.projectessentials.core.extensions.sendMsg
-import com.mairwunnx.projectessentials.core.helpers.ONLY_PLAYER_CAN
-import com.mairwunnx.projectessentials.core.helpers.PERMISSION_LEVEL
+import com.mairwunnx.projectessentials.core.helpers.throwOnlyPlayerCan
+import com.mairwunnx.projectessentials.core.helpers.throwPermissionLevel
 import com.mairwunnx.projectessentials.spawn.EntryPoint
 import com.mairwunnx.projectessentials.spawn.EntryPoint.Companion.hasPermission
 import com.mairwunnx.projectessentials.spawn.models.SpawnModelBase
+import com.mairwunnx.projectessentials.spawn.sendMessage
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.builder.LiteralArgumentBuilder.literal
 import com.mojang.brigadier.context.CommandContext
@@ -47,10 +47,10 @@ object SetSpawnCommand {
                 SpawnModelBase.spawnModel.yaw = player.rotationYaw
                 SpawnModelBase.spawnModel.pitch = player.rotationPitch
                 SpawnModelBase.spawnModel.worldId = player.serverWorld.worldType.id
-                player.world.spawnPoint = BlockPos(
+                player.serverWorld.spawnPoint = BlockPos(
                     player.positionVector.x, player.positionVector.y, player.positionVector.z
                 )
-                sendMsg("spawn", c.source, "spawn.set.success")
+                sendMessage(c.source, "set.success")
                 logger.info("New spawn point installed by ${player.name.string} with data: ")
                 logger.info("    - xpos: ${player.positionVector.x}")
                 logger.info("    - ypos: ${player.positionVector.y}")
@@ -59,15 +59,11 @@ object SetSpawnCommand {
                 logger.info("    - pitch: ${player.rotationPitch}")
                 logger.info("Executed command \"${c.input}\" from ${player.name.string}")
             } else {
-                sendMsg("spawn", c.source, "spawn.set.restricted")
-                logger.info(
-                    PERMISSION_LEVEL
-                        .replace("%0", player.name.string)
-                        .replace("%1", "setspawn")
-                )
+                sendMessage(c.source, "set.restricted")
+                throwPermissionLevel(player.name.string, "setspawn")
             }
         } else {
-            logger.info(ONLY_PLAYER_CAN.replace("%0", "setspawn"))
+            throwOnlyPlayerCan("setspawn")
         }
         return 0
     }

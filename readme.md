@@ -4,7 +4,7 @@
 
 ### Explore
 
-#### [Download mod](https://github.com/ProjectEssentials/ProjectEssentials-Spawn/releases/download/v1.15.2-1.0.0/Project.Essentials.Spawn-1.15.2-1.0.0.jar) · [How to install](https://mairwunnx.gitbook.io/project-essentials/project-essentials-spawn#how-to-install) · [Commands](https://mairwunnx.gitbook.io/project-essentials/project-essentials-spawn#commands-and-permissions) · [Configuration](https://mairwunnx.gitbook.io/project-essentials/project-essentials-spawn#configuration) · [Troubleshooting](https://github.com/ProjectEssentials/ProjectEssentials-Spawn/issues/new/choose) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/ProjectEssentials-Spawn) · [Change log](changelog.md)
+#### [Download mod](https://github.com/ProjectEssentials/ProjectEssentials-Spawn/releases/download/v1.15.2-1.1.0/Project.Essentials.Spawn-1.15.2-1.1.0.jar) · [How to install](https://mairwunnx.gitbook.io/project-essentials/project-essentials-spawn#how-to-install) · [Commands](https://mairwunnx.gitbook.io/project-essentials/project-essentials-spawn#commands-and-permissions) · [Configuration](https://mairwunnx.gitbook.io/project-essentials/project-essentials-spawn#configuration) · [Troubleshooting](https://github.com/ProjectEssentials/ProjectEssentials-Spawn/issues/new/choose) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/ProjectEssentials-Spawn) · [Change log](changelog.md)
 
 ### Compatibility
 
