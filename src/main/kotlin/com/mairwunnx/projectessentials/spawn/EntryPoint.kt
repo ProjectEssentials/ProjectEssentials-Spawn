@@ -1,6 +1,7 @@
 package com.mairwunnx.projectessentials.spawn
 
 import com.mairwunnx.projectessentials.core.EssBase
+import com.mairwunnx.projectessentials.core.backlocation.BackLocationProvider
 import com.mairwunnx.projectessentials.home.HomeAPI
 import com.mairwunnx.projectessentials.permissions.permissions.PermissionsAPI
 import com.mairwunnx.projectessentials.spawn.commands.SetSpawnCommand
@@ -80,6 +81,7 @@ class EntryPoint : EssBase() {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     fun onPlayerRespawn(event: PlayerEvent.PlayerRespawnEvent) {
         val player = event.player as ServerPlayerEntity
+        BackLocationProvider.commit(player)
 
         fun teleportToSpawnOrBed() {
             if (player.bedPosition.isPresent) {
