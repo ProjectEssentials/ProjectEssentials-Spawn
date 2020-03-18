@@ -47,7 +47,7 @@ object SetSpawnCommand {
                 SpawnModelBase.spawnModel.yaw = player.rotationYaw
                 SpawnModelBase.spawnModel.pitch = player.rotationPitch
                 SpawnModelBase.spawnModel.worldId = player.serverWorld.worldType.id
-                player.world.spawnPoint = BlockPos(player.posX, player.posY, player.posZ)
+                player.serverWorld.spawnPoint = BlockPos(player.posX, player.posY, player.posZ)
                 sendMsg("spawn", c.source, "spawn.set.success")
                 logger.info("New spawn point installed by ${player.name.string} with data: ")
                 logger.info("    - xpos: ${player.posX}")

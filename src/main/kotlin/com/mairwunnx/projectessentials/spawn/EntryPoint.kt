@@ -1,6 +1,7 @@
 package com.mairwunnx.projectessentials.spawn
 
 import com.mairwunnx.projectessentials.core.EssBase
+import com.mairwunnx.projectessentials.home.HomeAPI
 import com.mairwunnx.projectessentials.permissions.permissions.PermissionsAPI
 import com.mairwunnx.projectessentials.spawn.commands.SetSpawnCommand
 import com.mairwunnx.projectessentials.spawn.commands.SpawnCommand
@@ -25,7 +26,7 @@ class EntryPoint : EssBase() {
 
     init {
         modInstance = this
-        modVersion = "1.14.4-1.1.2"
+        modVersion = "1.14.4-1.2.0"
         logBaseInfo()
         validateForgeVersion()
         MinecraftForge.EVENT_BUS.register(this)
@@ -34,7 +35,7 @@ class EntryPoint : EssBase() {
 
     @SubscribeEvent(priority = EventPriority.HIGH)
     fun onServerStarting(event: FMLServerStartingEvent) {
-        registerCommands(event.server.commandManager.dispatcher)
+        registerCommands(event.commandDispatcher)
         processFirstSession(event)
         SpawnModelBase.assignSpawn(event.server)
     }
@@ -42,6 +43,7 @@ class EntryPoint : EssBase() {
     private fun processFirstSession(event: FMLServerStartingEvent) {
         logger.info("Processing first session for loaded world")
         var equals = true
+        // todo: previous todo apply for this
         val world = event.server.getWorld(DimensionType.OVERWORLD)
 
         if (SpawnModelBase.spawnModel.xPos.toInt() != world.spawnPoint.x) {
@@ -77,12 +79,52 @@ class EntryPoint : EssBase() {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     fun onPlayerRespawn(event: PlayerEvent.PlayerRespawnEvent) {
-        if (!event.player.bedPosition.isPresent) {
-            SpawnCommand.moveToSpawn(event.player as ServerPlayerEntity)
+        val player = event.player as ServerPlayerEntity
+
+        fun teleportToSpawnOrBed() {
+            if (player.bedPosition.isPresent) {
+                val bedPos = player.bedPosition.get()
+                val targetWorld = player.server.getWorld(DimensionType.OVERWORLD)
+                player.teleport(
+                    targetWorld,
+                    bedPos.x.toDouble() + 0.5,
+                    bedPos.y.toDouble() + 0.5,
+                    bedPos.z.toDouble() + 0.5,
+                    player.rotationYaw, player.rotationPitch
+                )
+            } else {
+                SpawnCommand.moveToSpawn(player)
+            }
         }
+
+        if (homeInstalled) {
+            val homes = HomeAPI.takeAll(player)
+
+            if (homes.isNotEmpty()) {
+                val home =
+                    homes.first() // todo configure it with core module (new api with common project settings)
+                val targetWorld = player.server.getWorld(
+                    DimensionType.getById(home.worldId) ?: DimensionType.OVERWORLD
+                )
+                player.teleport(
+                    targetWorld,
+                    home.xPos.toDouble() + 0.5,
+                    home.yPos.toDouble() + 0.5,
+                    home.zPos.toDouble() + 0.5,
+                    home.yaw, home.pitch
+                )
+            } else teleportToSpawnOrBed()
+        } else teleportToSpawnOrBed()
     }
 
     private fun loadAdditionalModules() {
+        try {
+            Class.forName("com.mairwunnx.projectessentials.home.HomeAPI")
+            homeInstalled = true
+        } catch (_: ClassNotFoundException) {
+            // ignored
+        }
+
         try {
             Class.forName(cooldownAPIClassPath)
             cooldownsInstalled = true
@@ -102,6 +144,7 @@ class EntryPoint : EssBase() {
         lateinit var modInstance: EntryPoint
         var cooldownsInstalled: Boolean = false
         var permissionsInstalled: Boolean = false
+        var homeInstalled: Boolean = false
 
         fun hasPermission(player: ServerPlayerEntity, node: String, opLevel: Int = 4): Boolean =
             if (permissionsInstalled) {
