@@ -1,0 +1,12 @@
+{
+  "project_essentials_spawn.spawn.reload.restricted": "§c你 §7没有权限 §c重新加载世界出生点配置文件。",
+  "project_essentials_spawn.spawn.reload.success": "§6世界出生点 §7成功 §6重载。",
+  "project_essentials_spawn.spawn.version.restricted": "§c你 §7没有权限 §c查看essentials spawn版本。",
+  "project_essentials_spawn.spawn.version.success": "          §6%s\n§c版本: §7%s\n§c维护者: §7%s\n§c目标 Forge version: §7%s\n§c目标 Minecraft version: §7%s\n§c源代码: §7%s§7\n§cTelegram聊天室: §7%s",
+  "project_essentials_spawn.spawn.save.restricted": "§c你 §7没有权限 §c保存世界出生点。",
+  "project_essentials_spawn.spawn.save.success": "§6世界出生点 §7成功 §6保存。",
+  "project_essentials_spawn.spawn.restricted": "§c你 §7没有权限 §c传送到出生点。",
+  "project_essentials_spawn.spawn.success": "§6传送到出生点。",
+  "project_essentials_spawn.spawn.set.restricted": "§c你 §7没有权限 §c设置新的出生点。",
+  "project_essentials_spawn.spawn.set.success": "§6新 §7出生点 §6已保存。"
+}
