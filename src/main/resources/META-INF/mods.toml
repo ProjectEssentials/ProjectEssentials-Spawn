@@ -8,7 +8,7 @@ issueTrackerURL="https://github.com/ProjectEssentials/ProjectEssentials-Spawn/is
     displayName="Project Essentials Spawn"
     updateJSONURL="https://raw.githubusercontent.com/ProjectEssentials/ProjectEssentials-Spawn/MC-1.14.4/updatev2.json"
     displayURL="https://github.com/ProjectEssentials/ProjectEssentials-Spawn"
-    credits="Thanks JetBrains for Intellij IDEA license!"
+    credits="hujle, JetBrains, all forge developers, and other contributors"
     authors="MairwunNx (Pavel Erokhin)"
     description='''
     Project Essentials Spawn - additional module for Essentials;
