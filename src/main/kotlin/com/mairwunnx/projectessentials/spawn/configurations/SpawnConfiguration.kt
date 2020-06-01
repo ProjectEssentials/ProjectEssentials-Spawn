@@ -3,6 +3,7 @@ package com.mairwunnx.projectessentials.spawn.configurations
 import com.mairwunnx.projectessentials.core.api.v1.configuration.IConfiguration
 import com.mairwunnx.projectessentials.core.api.v1.helpers.jsonInstance
 import com.mairwunnx.projectessentials.core.api.v1.helpers.projectConfigDirectory
+import net.minecraftforge.fml.server.ServerLifecycleHooks
 import org.apache.logging.log4j.LogManager
 import java.io.File
 import java.io.FileNotFoundException
@@ -14,7 +15,9 @@ object SpawnConfiguration : IConfiguration<SpawnConfigurationModel> {
     override val name = "spawn"
     override val version = 1
     override val configuration = take()
-    override val path = projectConfigDirectory + File.separator + "spawn.json"
+    override val path by lazy {
+        projectConfigDirectory + File.separator + ServerLifecycleHooks.getCurrentServer().folderName + File.separator + "spawn.json"
+    }
 
     override fun load() {
         try {
