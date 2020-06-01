@@ -56,7 +56,12 @@ class ModuleObject : IModule {
 
     @SubscribeEvent
     fun onServerStarting(event: FMLServerStartingEvent) {
-        firstSessionSpawnPoint(event)
+        if (firstLaunch) {
+            val world = event.server.getWorld(DimensionType.OVERWORLD)
+            spawnConfiguration.take().xPos = world.spawnPoint.x
+            spawnConfiguration.take().yPos = world.spawnPoint.y
+            spawnConfiguration.take().zPos = world.spawnPoint.z
+        }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -75,15 +80,6 @@ class ModuleObject : IModule {
             }
         } else {
             forceTeleportToSpawn(player)
-        }
-    }
-
-    private fun firstSessionSpawnPoint(event: FMLServerStartingEvent) {
-        if (firstLaunch) {
-            val world = event.server.getWorld(DimensionType.OVERWORLD)
-            spawnConfiguration.take().xPos = world.spawnPoint.x
-            spawnConfiguration.take().yPos = world.spawnPoint.y
-            spawnConfiguration.take().zPos = world.spawnPoint.z
         }
     }
 
