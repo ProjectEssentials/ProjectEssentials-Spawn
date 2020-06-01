@@ -13,8 +13,11 @@ import com.mairwunnx.projectessentials.spawn.commands.SetSpawnCommand
 import com.mairwunnx.projectessentials.spawn.commands.SpawnCommand
 import com.mairwunnx.projectessentials.spawn.configurations.SpawnConfiguration
 import net.minecraft.entity.player.ServerPlayerEntity
+import net.minecraft.util.math.BlockPos
 import net.minecraft.world.dimension.DimensionType
 import net.minecraftforge.common.MinecraftForge.EVENT_BUS
+import net.minecraftforge.event.entity.player.PlayerEvent
+import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.InterModComms
 import net.minecraftforge.fml.common.Mod
@@ -54,6 +57,25 @@ class ModuleObject : IModule {
     @SubscribeEvent
     fun onServerStarting(event: FMLServerStartingEvent) {
         firstSessionSpawnPoint(event)
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    fun onPlayerRespawn(event: PlayerEvent.PlayerRespawnEvent) {
+        val player = event.player as ServerPlayerEntity
+        if (player.bedPosition.isPresent) {
+            player.server.worlds.forEach {
+                val pos = player.getBedLocation(it.dimension.type) as BlockPos?
+                if (pos != null) {
+                    player.teleport(
+                        it,
+                        pos.x.toDouble() + 0.5, pos.y.toDouble() + 0.5, pos.z.toDouble() + 0.5,
+                        player.rotationYaw, player.rotationPitch
+                    )
+                }
+            }
+        } else {
+            forceTeleportToSpawn(player)
+        }
     }
 
     private fun firstSessionSpawnPoint(event: FMLServerStartingEvent) {
