@@ -1,68 +1,42 @@
 package com.mairwunnx.projectessentials.spawn.commands
 
-import com.mairwunnx.projectessentials.cooldown.essentials.CommandsAliases
-import com.mairwunnx.projectessentials.core.extensions.isPlayerSender
-import com.mairwunnx.projectessentials.core.helpers.throwOnlyPlayerCan
-import com.mairwunnx.projectessentials.core.helpers.throwPermissionLevel
-import com.mairwunnx.projectessentials.spawn.EntryPoint
-import com.mairwunnx.projectessentials.spawn.EntryPoint.Companion.hasPermission
-import com.mairwunnx.projectessentials.spawn.models.SpawnModelBase
-import com.mairwunnx.projectessentials.spawn.sendMessage
-import com.mojang.brigadier.CommandDispatcher
-import com.mojang.brigadier.builder.LiteralArgumentBuilder.literal
+import com.mairwunnx.projectessentials.core.api.v1.MESSAGE_MODULE_PREFIX
+import com.mairwunnx.projectessentials.core.api.v1.commands.CommandBase
+import com.mairwunnx.projectessentials.core.api.v1.extensions.currentDimensionId
+import com.mairwunnx.projectessentials.core.api.v1.extensions.getPlayer
+import com.mairwunnx.projectessentials.core.api.v1.messaging.MessagingAPI
+import com.mairwunnx.projectessentials.core.api.v1.messaging.ServerMessagingAPI
+import com.mairwunnx.projectessentials.spawn.helpers.validateAndExecute
+import com.mairwunnx.projectessentials.spawn.spawnConfiguration
 import com.mojang.brigadier.context.CommandContext
 import net.minecraft.command.CommandSource
 import net.minecraft.util.math.BlockPos
-import org.apache.logging.log4j.LogManager
 
-object SetSpawnCommand {
-    private val aliases = listOf(
-        "setspawn", "esetspawn", "spawnpoint", "setworldspawn"
-    )
-    private val logger = LogManager.getLogger()
-
-    fun register(dispatcher: CommandDispatcher<CommandSource>) {
-        logger.info("Register \"/setspawn\" command")
-        applyCommandAliases()
-
-        aliases.forEach { command ->
-            dispatcher.register(
-                literal<CommandSource>(command).executes(::execute)
-            )
-        }
-    }
-
-    private fun applyCommandAliases() {
-        if (!EntryPoint.cooldownsInstalled) return
-        CommandsAliases.aliases["setspawn"] = aliases.toMutableList()
-    }
-
-    private fun execute(c: CommandContext<CommandSource>): Int {
-        if (c.isPlayerSender()) {
-            val player = c.source.asPlayer()
-            if (hasPermission(player, "ess.spawn.set")) {
-                SpawnModelBase.spawnModel.xPos = player.posX
-                SpawnModelBase.spawnModel.yPos = player.posY
-                SpawnModelBase.spawnModel.zPos = player.posZ
-                SpawnModelBase.spawnModel.yaw = player.rotationYaw
-                SpawnModelBase.spawnModel.pitch = player.rotationPitch
-                SpawnModelBase.spawnModel.worldId = player.serverWorld.worldType.id
-                player.serverWorld.spawnPoint = BlockPos(player.posX, player.posY, player.posZ)
-                sendMessage(c.source, "set.success")
-                logger.info("New spawn point installed by ${player.name.string} with data: ")
-                logger.info("    - xpos: ${player.posX}")
-                logger.info("    - ypos: ${player.posY}")
-                logger.info("    - zpos: ${player.posZ}")
-                logger.info("    - yaw: ${player.rotationYaw}")
-                logger.info("    - pitch: ${player.rotationPitch}")
-                logger.info("Executed command \"${c.input}\" from ${player.name.string}")
+object SetSpawnCommand : CommandBase(setSpawnLiteral) {
+    override val name = "set-spawn"
+    override fun process(context: CommandContext<CommandSource>) = 0.also {
+        validateAndExecute(context, "ess.spawn.set", 4) { isServer ->
+            if (isServer) {
+                ServerMessagingAPI.throwOnlyPlayerCan()
             } else {
-                sendMessage(c.source, "set.restricted")
-                throwPermissionLevel(player.name.string, "setspawn")
+                with(spawnConfiguration.take()) {
+                    xPos = context.getPlayer()!!.position.x
+                    yPos = context.getPlayer()!!.position.y
+                    zPos = context.getPlayer()!!.position.z
+                    yaw = context.getPlayer()!!.rotationYaw
+                    pitch = context.getPlayer()!!.rotationPitch
+                    dimensionId = context.getPlayer()!!.currentDimensionId
+                }.also {
+                    context.getPlayer()!!.serverWorld.spawnPoint = BlockPos(
+                        context.getPlayer()!!.position.x,
+                        context.getPlayer()!!.position.y,
+                        context.getPlayer()!!.position.z
+                    )
+                    MessagingAPI.sendMessage(
+                        context.getPlayer()!!, "${MESSAGE_MODULE_PREFIX}spawn.set.success"
+                    ).also { super.process(context) }
+                }
             }
-        } else {
-            throwOnlyPlayerCan("setspawn")
         }
-        return 0
     }
 }
