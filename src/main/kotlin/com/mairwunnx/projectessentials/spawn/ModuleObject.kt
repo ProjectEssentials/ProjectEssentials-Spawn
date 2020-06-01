@@ -79,8 +79,8 @@ class ModuleObject : IModule {
     }
 
     private fun firstSessionSpawnPoint(event: FMLServerStartingEvent) {
-        val world = event.server.getWorld(DimensionType.OVERWORLD)
         if (firstLaunch) {
+            val world = event.server.getWorld(DimensionType.OVERWORLD)
             spawnConfiguration.take().xPos = world.spawnPoint.x
             spawnConfiguration.take().yPos = world.spawnPoint.y
             spawnConfiguration.take().zPos = world.spawnPoint.z
