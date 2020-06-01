@@ -11,8 +11,8 @@ issueTrackerURL="https://github.com/ProjectEssentials/ProjectEssentials-Spawn/is
     credits="hujle, JetBrains, all forge developers, and other contributors"
     authors="MairwunNx (Pavel Erokhin)"
     description='''
-    Project Essentials Spawn - additional module for Essentials;
-    Just controlling world spawn position for players.
+    How we control spawn point! Adds literally two commands to configure
+    players spawn point in the game world.
     '''
 
 [[dependencies.projectessentialspermissions]]
