@@ -1,4 +1,4 @@
-@file:Suppress("unused")
+@file:Suppress("unused", "SENSELESS_COMPARISON")
 
 package com.mairwunnx.projectessentials.spawn
 
@@ -13,7 +13,6 @@ import com.mairwunnx.projectessentials.spawn.commands.SetSpawnCommand
 import com.mairwunnx.projectessentials.spawn.commands.SpawnCommand
 import com.mairwunnx.projectessentials.spawn.configurations.SpawnConfiguration
 import net.minecraft.entity.player.ServerPlayerEntity
-import net.minecraft.util.math.BlockPos
 import net.minecraft.world.dimension.DimensionType
 import net.minecraftforge.common.MinecraftForge.EVENT_BUS
 import net.minecraftforge.event.entity.player.PlayerEvent
@@ -69,7 +68,7 @@ class ModuleObject : IModule {
         val player = event.player as ServerPlayerEntity
         if (player.bedPosition.isPresent) {
             player.server.worlds.forEach {
-                val pos = player.getBedLocation(it.dimension.type) as BlockPos?
+                val pos = player.getBedLocation(it.dimension.type)
                 if (pos != null) {
                     player.teleport(
                         it,
