@@ -3,6 +3,7 @@ package com.mairwunnx.projectessentials.spawn.configurations
 import com.mairwunnx.projectessentials.core.api.v1.configuration.IConfiguration
 import com.mairwunnx.projectessentials.core.api.v1.helpers.jsonInstance
 import com.mairwunnx.projectessentials.core.api.v1.helpers.projectConfigDirectory
+import com.mairwunnx.projectessentials.spawn.firstLaunch
 import net.minecraftforge.fml.server.ServerLifecycleHooks
 import org.apache.logging.log4j.LogManager
 import java.io.File
@@ -28,6 +29,7 @@ object SpawnConfiguration : IConfiguration<SpawnConfigurationModel> {
         } catch (ex: FileNotFoundException) {
             logger.error("Configuration file ($path) not found!")
             logger.warn("The default configuration will be used")
+            firstLaunch = true
         }
     }
 
