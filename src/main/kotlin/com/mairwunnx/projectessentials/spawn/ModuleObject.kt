@@ -4,6 +4,7 @@ package com.mairwunnx.projectessentials.spawn
 
 import com.mairwunnx.projectessentials.core.api.v1.IMCLocalizationMessage
 import com.mairwunnx.projectessentials.core.api.v1.IMCProvidersMessage
+import com.mairwunnx.projectessentials.core.api.v1.configuration.ConfigurationAPI.getConfigurationByName
 import com.mairwunnx.projectessentials.core.api.v1.events.ModuleEventAPI.subscribeOn
 import com.mairwunnx.projectessentials.core.api.v1.events.forge.ForgeEventType
 import com.mairwunnx.projectessentials.core.api.v1.events.forge.InterModEnqueueEventData
@@ -11,9 +12,27 @@ import com.mairwunnx.projectessentials.core.api.v1.module.IModule
 import com.mairwunnx.projectessentials.spawn.commands.SetSpawnCommand
 import com.mairwunnx.projectessentials.spawn.commands.SpawnCommand
 import com.mairwunnx.projectessentials.spawn.configurations.SpawnConfiguration
+import net.minecraft.entity.player.ServerPlayerEntity
+import net.minecraft.world.dimension.DimensionType
 import net.minecraftforge.common.MinecraftForge.EVENT_BUS
+import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.InterModComms
 import net.minecraftforge.fml.common.Mod
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent
+
+var firstLaunch = false
+val spawnConfiguration by lazy {
+    getConfigurationByName<SpawnConfiguration>("spawn")
+}
+
+fun forceTeleportToSpawn(player: ServerPlayerEntity) {
+    val targetWorld = player.server.getWorld(
+        DimensionType.getById(spawnConfiguration.take().dimensionId) ?: DimensionType.OVERWORLD
+    )
+    with(spawnConfiguration.take()) {
+        player.teleport(targetWorld, xPos + 0.5, yPos + 0.5, zPos + 0.5, yaw, pitch)
+    }
+}
 
 @Mod("project_essentials_spawn")
 class ModuleObject : IModule {
@@ -29,6 +48,20 @@ class ModuleObject : IModule {
         ) {
             sendLocalizationRequest()
             sendProvidersRequest()
+        }
+    }
+
+    @SubscribeEvent
+    fun onServerStarting(event: FMLServerStartingEvent) {
+        firstSessionSpawnPoint(event)
+    }
+
+    private fun firstSessionSpawnPoint(event: FMLServerStartingEvent) {
+        val world = event.server.getWorld(DimensionType.OVERWORLD)
+        if (firstLaunch) {
+            spawnConfiguration.take().xPos = world.spawnPoint.x
+            spawnConfiguration.take().yPos = world.spawnPoint.y
+            spawnConfiguration.take().zPos = world.spawnPoint.z
         }
     }
 
