@@ -33,7 +33,7 @@ object SetSpawnCommand : CommandBase(setSpawnLiteral) {
                         context.getPlayer()!!.position.z
                     )
                     MessagingAPI.sendMessage(
-                        context.getPlayer()!!, "${MESSAGE_MODULE_PREFIX}spawn.set.success"
+                        context.getPlayer()!!, "${MESSAGE_MODULE_PREFIX}spawn.setspawn.success"
                     ).also { super.process(context) }
                 }
             }

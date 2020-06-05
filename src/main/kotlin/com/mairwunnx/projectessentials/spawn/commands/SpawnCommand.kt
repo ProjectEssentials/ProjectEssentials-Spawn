@@ -19,7 +19,7 @@ object SpawnCommand : CommandBase(spawnLiteral) {
                 ServerMessagingAPI.throwOnlyPlayerCan()
             } else {
                 MessagingAPI.sendMessage(
-                    context.getPlayer()!!, "${MESSAGE_MODULE_PREFIX}spawn.success"
+                    context.getPlayer()!!, "${MESSAGE_MODULE_PREFIX}spawn.spawn.success"
                 ).also { BackLocationAPI.commit(context.getPlayer()!!) }
                 forceTeleportToSpawn(context.getPlayer()!!).also { super.process(context) }
             }
