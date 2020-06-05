@@ -3,7 +3,6 @@
 package com.mairwunnx.projectessentials.spawn
 
 import com.mairwunnx.projectessentials.core.api.v1.configuration.ConfigurationAPI.getConfigurationByName
-import com.mairwunnx.projectessentials.core.api.v1.localization.Localization
 import com.mairwunnx.projectessentials.core.api.v1.localization.LocalizationAPI
 import com.mairwunnx.projectessentials.core.api.v1.module.IModule
 import com.mairwunnx.projectessentials.core.api.v1.providers.ProviderAPI
@@ -56,16 +55,14 @@ class ModuleObject : IModule {
     }
 
     private fun initLocalization() {
-        LocalizationAPI.apply(
-            Localization(
-                mutableListOf(
-                    "/assets/projectessentialsspawn/lang/en_us.json",
-                    "/assets/projectessentialsspawn/lang/ru_ru.json",
-                    "/assets/projectessentialsspawn/lang/zh_cn.json",
-                    "/assets/projectessentialsspawn/lang/de_de.json"
-                ), "core", this.javaClass
+        LocalizationAPI.apply(this.javaClass) {
+            mutableListOf(
+                "/assets/projectessentialsspawn/lang/en_us.json",
+                "/assets/projectessentialsspawn/lang/ru_ru.json",
+                "/assets/projectessentialsspawn/lang/zh_cn.json",
+                "/assets/projectessentialsspawn/lang/de_de.json"
             )
-        )
+        }
     }
 
     @SubscribeEvent
