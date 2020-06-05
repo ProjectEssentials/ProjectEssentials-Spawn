@@ -2,13 +2,11 @@
 
 package com.mairwunnx.projectessentials.spawn
 
-import com.mairwunnx.projectessentials.core.api.v1.IMCLocalizationMessage
-import com.mairwunnx.projectessentials.core.api.v1.IMCProvidersMessage
 import com.mairwunnx.projectessentials.core.api.v1.configuration.ConfigurationAPI.getConfigurationByName
-import com.mairwunnx.projectessentials.core.api.v1.events.ModuleEventAPI.subscribeOn
-import com.mairwunnx.projectessentials.core.api.v1.events.forge.ForgeEventType
-import com.mairwunnx.projectessentials.core.api.v1.events.forge.InterModEnqueueEventData
+import com.mairwunnx.projectessentials.core.api.v1.localization.Localization
+import com.mairwunnx.projectessentials.core.api.v1.localization.LocalizationAPI
 import com.mairwunnx.projectessentials.core.api.v1.module.IModule
+import com.mairwunnx.projectessentials.core.api.v1.providers.ProviderAPI
 import com.mairwunnx.projectessentials.spawn.commands.SetSpawnCommand
 import com.mairwunnx.projectessentials.spawn.commands.SpawnCommand
 import com.mairwunnx.projectessentials.spawn.configurations.SpawnConfiguration
@@ -18,7 +16,6 @@ import net.minecraftforge.common.MinecraftForge.EVENT_BUS
 import net.minecraftforge.event.entity.player.PlayerEvent
 import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.eventbus.api.SubscribeEvent
-import net.minecraftforge.fml.InterModComms
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent
 
@@ -45,12 +42,30 @@ class ModuleObject : IModule {
 
     init {
         EVENT_BUS.register(this)
-        subscribeOn<InterModEnqueueEventData>(
-            ForgeEventType.EnqueueIMCEvent
-        ) {
-            sendLocalizationRequest()
-            sendProvidersRequest()
-        }
+        initProviders()
+        initLocalization()
+    }
+
+    private fun initProviders() {
+        listOf(
+            SpawnConfiguration::class.java,
+            ModuleObject::class.java,
+            SetSpawnCommand::class.java,
+            SpawnCommand::class.java
+        ).forEach(ProviderAPI::addProvider)
+    }
+
+    private fun initLocalization() {
+        LocalizationAPI.apply(
+            Localization(
+                mutableListOf(
+                    "/assets/projectessentialsspawn/lang/en_us.json",
+                    "/assets/projectessentialsspawn/lang/ru_ru.json",
+                    "/assets/projectessentialsspawn/lang/zh_cn.json",
+                    "/assets/projectessentialsspawn/lang/de_de.json"
+                ), "core", this.javaClass
+            )
+        )
     }
 
     @SubscribeEvent
@@ -79,34 +94,6 @@ class ModuleObject : IModule {
             }
         } else {
             forceTeleportToSpawn(player)
-        }
-    }
-
-    private fun sendLocalizationRequest() {
-        InterModComms.sendTo(
-            "project_essentials_core",
-            IMCLocalizationMessage
-        ) {
-            fun() = mutableListOf(
-                "/assets/projectessentialsspawn/lang/en_us.json",
-                "/assets/projectessentialsspawn/lang/ru_ru.json",
-                "/assets/projectessentialsspawn/lang/zh_cn.json",
-                "/assets/projectessentialsspawn/lang/de_de.json"
-            )
-        }
-    }
-
-    private fun sendProvidersRequest() {
-        InterModComms.sendTo(
-            "project_essentials_core",
-            IMCProvidersMessage
-        ) {
-            fun() = listOf(
-                SpawnConfiguration::class.java,
-                ModuleObject::class.java,
-                SetSpawnCommand::class.java,
-                SpawnCommand::class.java
-            )
         }
     }
 }
