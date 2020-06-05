@@ -38,7 +38,7 @@ object SpawnConfiguration : IConfiguration<SpawnConfigurationModel> {
 
         logger.info("Saving configuration `${name}`")
         val raw = jsonInstance.stringify(
-            SpawnConfigurationModel.serializer(), configuration
+            SpawnConfigurationModel.serializer(), configurationData
         )
         try {
             File(path).writeText(raw)
