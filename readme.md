@@ -4,7 +4,7 @@ Module literally adds two commands to configure players spawn point in the game 
 
 ### Explore
 
-#### [1.14.4 Download](https://github.com/ProjectEssentials/ProjectEssentials-Spawn/releases/download/v1.14.4-1.2.0/Project.Essentials.Spawn-1.14.4-1.2.0.jar) · [1.15.2 Download](https://github.com/ProjectEssentials/ProjectEssentials-Spawn/releases/download/v1.15.2-1.1.0/Project.Essentials.Spawn-1.15.2-1.1.0.jar) · [User guide](https://mairwunnx.gitbook.io/project-essentials/project-essentials-spawn#how-to-install) · [Troubleshooting](https://github.com/ProjectEssentials/ProjectEssentials-Spawn/issues/new/choose) · [Telegram](https://t.me/minecraftforge) · [Discord](https://discord.gg/VU9XZAt) · [Change log](changelog.md)
+#### [1.14.4 Download](https://github.com/ProjectEssentials/ProjectEssentials-Spawn/releases/download/2.0.0%2BMC-1.14.4/Project.Essentials.Spawn-2.0.0+MC-1.14.4.jar) · [1.15.2 Download](https://github.com/ProjectEssentials/ProjectEssentials-Spawn/releases/download/2.0.0%2BMC-1.15.2/Project.Essentials.Spawn-2.0.0+MC-1.15.2.jar) · [User guide](https://mairwunnx.gitbook.io/project-essentials/project-essentials-spawn#how-to-install) · [Troubleshooting](https://github.com/ProjectEssentials/ProjectEssentials-Spawn/issues/new/choose) · [Telegram](https://t.me/minecraftforge) · [Discord](https://discord.gg/VU9XZAt) · [Change log](changelog.md)
 
 [![](https://github.com/ProjectEssentials/ProjectEssentials-Assets/raw/ASSETS-20-Q2/assets/common/support.png)](https://gist.github.com/MairwunNx/fda95062618db6880ef8ee06e1bba54f)
 
