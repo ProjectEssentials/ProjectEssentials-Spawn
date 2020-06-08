@@ -15,9 +15,7 @@ object SpawnCommand : CommandBase(spawnLiteral) {
     override val name = "spawn"
     override fun process(context: CommandContext<CommandSource>) = 0.also {
         validateAndExecute(context, "ess.spawn.teleport", 0) { isServer ->
-            if (isServer) {
-                ServerMessagingAPI.throwOnlyPlayerCan()
-            } else {
+            if (isServer) ServerMessagingAPI.throwOnlyPlayerCan() else {
                 MessagingAPI.sendMessage(
                     context.getPlayer()!!, "${MESSAGE_MODULE_PREFIX}spawn.spawn.success"
                 ).also { BackLocationAPI.commit(context.getPlayer()!!) }
