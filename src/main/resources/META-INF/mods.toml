@@ -4,21 +4,21 @@ issueTrackerURL="https://github.com/ProjectEssentials/ProjectEssentials-Spawn/is
 
 [[mods]]
     modId="project_essentials_spawn"
-    version="1.15.2-1.1.0"
+    version="${file.jarVersion}"
     displayName="Project Essentials Spawn"
-    updateJSONURL="https://raw.githubusercontent.com/ProjectEssentials/ProjectEssentials-Spawn/MC-1.15.2/update.json"
+    updateJSONURL="https://raw.githubusercontent.com/ProjectEssentials/ProjectEssentials-Spawn/MC-1.15.2/updatev2.json"
     displayURL="https://github.com/ProjectEssentials/ProjectEssentials-Spawn"
-    credits="Thanks JetBrains for Intellij IDEA license!"
+    credits="hujle, KuroNoSeiHai, JetBrains, all forge developers, and other contributors"
     authors="MairwunNx (Pavel Erokhin)"
     description='''
-    Project Essentials Spawn - additional module for Essentials;
-    Just controlling world spawn position for players.
+    How we control spawn point! Adds literally two commands to configure
+    players spawn point in the game world.
     '''
 
 [[dependencies.projectessentialspermissions]]
     modId="project_essentials_core"
     mandatory=true
-    versionRange="[1,)"
+    versionRange="[2,)"
     ordering="NONE"
     side="BOTH"
 
