@@ -16,9 +16,7 @@ object SetSpawnCommand : CommandBase(setSpawnLiteral) {
     override val name = "set-spawn"
     override fun process(context: CommandContext<CommandSource>) = 0.also {
         validateAndExecute(context, "ess.spawn.set", 4) { isServer ->
-            if (isServer) {
-                ServerMessagingAPI.throwOnlyPlayerCan()
-            } else {
+            if (isServer) ServerMessagingAPI.throwOnlyPlayerCan() else {
                 with(spawnConfiguration.take()) {
                     xPos = context.getPlayer()!!.position.x
                     yPos = context.getPlayer()!!.position.y
