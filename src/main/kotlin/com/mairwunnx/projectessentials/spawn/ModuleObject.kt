@@ -89,8 +89,6 @@ class ModuleObject : IModule {
                     )
                 }
             }
-        } else {
-            forceTeleportToSpawn(player)
-        }
+        } else forceTeleportToSpawn(player)
     }
 }
