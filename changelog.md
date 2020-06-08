@@ -8,12 +8,16 @@ Since 2.0.0 versions change log same for all supported minecraft versions.
 
 ## [Unreleased]
 
-## [2.0.0-RC.1] - 2020-06-05
+## [2.0.0] - 2020-06-08
 
 ### Changed
 - Core dependency updated.
 - Localization updated.
 - Applying localization strategy changed.
+- core dependency now is not transitive.
+- core version updated to 2.0.3.
+- credits updated in mods.toml.
+- load index changed to 3.
 
 ### Fixed
 - Localization and provider registering fixed.
