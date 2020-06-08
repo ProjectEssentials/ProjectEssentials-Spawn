@@ -36,7 +36,7 @@ fun forceTeleportToSpawn(player: ServerPlayerEntity) {
 class ModuleObject : IModule {
     override val name = this::class.java.`package`.implementationTitle.split(" ").last()
     override val version = this::class.java.`package`.implementationVersion!!
-    override val loadIndex = 2
+    override val loadIndex = 3
     override fun init() = Unit
 
     init {
