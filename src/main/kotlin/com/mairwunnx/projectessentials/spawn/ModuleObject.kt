@@ -76,8 +76,8 @@ class ModuleObject : IModule {
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    fun onPlayerRespawn(event: PlayerEvent.PlayerRespawnEvent) {
-        val player = event.player as ServerPlayerEntity
+    fun onPlayerRespawn(event: PlayerEvent.Clone) {
+        val player = event.original as ServerPlayerEntity
         if (player.bedPosition.isPresent) {
             player.server.worlds.forEach {
                 val pos = player.getBedLocation(it.dimension.type)
