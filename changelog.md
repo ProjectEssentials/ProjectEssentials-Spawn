@@ -8,6 +8,11 @@ Since 2.0.0 versions change log same for all supported minecraft versions.
 
 ## [Unreleased]
 
+## [2.0.1-RC.1] - 2020-06-13
+
+### Fixed
+- Probably fixed incorrect bed existing checking while player respawning.
+
 ## [2.0.0] - 2020-06-08
 
 ### Changed
