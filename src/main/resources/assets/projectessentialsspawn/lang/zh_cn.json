@@ -1,4 +1,5 @@
 {
+  "project_essentials_spawn.restricted": "§c你 §7没有权限 §c使用此命令。",
   "project_essentials_spawn.spawn.success": "§6传送到出生点。",
   "project_essentials_spawn.setspawn.success": "§6新 §7出生点 §6已保存。"
 }
