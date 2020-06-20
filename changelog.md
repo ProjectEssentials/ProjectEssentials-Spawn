@@ -8,6 +8,15 @@ Since 2.0.0 versions change log same for all supported minecraft versions.
 
 ## [Unreleased]
 
+## [2.0.1] - 2020-06-20
+
+### Added 
+- Chinese simplified localization by @KuroNoSeiHai
+
+### Fixed
+- Incorrect taking spawn position after player death when player not have home and bed.
+- Incorrect taking bed position after player death when player not have home, but have a bed.
+
 ## [2.0.1-RC.1] - 2020-06-13
 
 ### Fixed
