@@ -1,16 +1,19 @@
-@file:Suppress("unused", "SENSELESS_COMPARISON")
+@file:Suppress("unused", "SENSELESS_COMPARISON", "UNNECESSARY_SAFE_CALL")
 
 package com.mairwunnx.projectessentials.spawn
 
 import com.mairwunnx.projectessentials.core.api.v1.configuration.ConfigurationAPI.getConfigurationByName
+import com.mairwunnx.projectessentials.core.api.v1.extensions.asPlayerEntity
 import com.mairwunnx.projectessentials.core.api.v1.localization.LocalizationAPI
 import com.mairwunnx.projectessentials.core.api.v1.module.IModule
 import com.mairwunnx.projectessentials.core.api.v1.providers.ProviderAPI
 import com.mairwunnx.projectessentials.spawn.commands.SetSpawnCommand
 import com.mairwunnx.projectessentials.spawn.commands.SpawnCommand
 import com.mairwunnx.projectessentials.spawn.configurations.SpawnConfiguration
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.world.dimension.DimensionType
+import net.minecraft.world.dimension.DimensionType.getById
 import net.minecraftforge.common.MinecraftForge.EVENT_BUS
 import net.minecraftforge.event.entity.player.PlayerEvent
 import net.minecraftforge.eventbus.api.EventPriority
@@ -25,7 +28,7 @@ val spawnConfiguration by lazy {
 
 fun forceTeleportToSpawn(player: ServerPlayerEntity) {
     val targetWorld = player.server.getWorld(
-        DimensionType.getById(spawnConfiguration.take().dimensionId) ?: DimensionType.OVERWORLD
+        getById(spawnConfiguration.take().dimensionId) ?: DimensionType.OVERWORLD
     )
     with(spawnConfiguration.take()) {
         player.teleport(targetWorld, xPos + 0.5, yPos + 0.5, zPos + 0.5, yaw, pitch)
@@ -75,20 +78,33 @@ class ModuleObject : IModule {
         }
     }
 
+    private val handledForSpawn = mutableSetOf<String>()
+
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     fun onPlayerRespawn(event: PlayerEvent.Clone) {
+        if (!event.isWasDeath) return
         val player = event.original as ServerPlayerEntity
-        if (player.bedPosition.isPresent) {
-            player.server.worlds.forEach {
-                val pos = player.getBedLocation(it.dimension.type)
-                if (pos != null) {
+        player.server.worlds.forEach {
+            player.getBedLocation(it.dimension.type)?.let { pos ->
+                if (
+                    PlayerEntity.func_213822_a(
+                        player.server.getWorld(player.dimension), pos, false
+                    ).isPresent
+                ) {
                     player.teleport(
-                        it,
-                        pos.x.toDouble() + 0.5, pos.y.toDouble() + 0.5, pos.z.toDouble() + 0.5,
+                        it, pos.x.toDouble() + 0.5, pos.y.toDouble() + 0.5, pos.z.toDouble() + 0.5,
                         player.rotationYaw, player.rotationPitch
-                    )
-                }
+                    ).let { return }
+                } else handledForSpawn.add(player.name.string)
             }
-        } else forceTeleportToSpawn(player)
+        }
+        handledForSpawn.add(player.name.string)
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    fun onPlayerRespawnPost(event: PlayerEvent.PlayerRespawnEvent) {
+        if (event.player.name.string !in handledForSpawn) return
+        handledForSpawn.remove(event.player.name.string)
+        forceTeleportToSpawn(event.player.asPlayerEntity)
     }
 }
